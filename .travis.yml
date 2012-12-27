@@ -1,7 +1,7 @@
 before_install:
    - mkdir build
    - cd build
-   - sudo apt-get install flex texinfo build-essentials -qq
+   - sudo apt-get install flex texinfo build-essential -qq
    - export BUILDFOR=62
    - sudo ../tools/rockboxdevgcc.sh > /dev/null
    - sudo ../tools/rockboxdevbinutils.sh > /dev/null
