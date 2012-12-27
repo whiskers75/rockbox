@@ -1,12 +1,13 @@
-before_install:
+before_script:
    - mkdir build
    - cd build
    - sudo apt-get install flex texinfo -qq
    - export BUILDFOR=62
-   - echo "Running RockboxDEV Installer"
-   - sudo ../tools/rockboxdevquiet.sh > /dev/null
    - echo "Running configure"
    - ../tools/configurequiet > /dev/null
 
-install: make
+install: sudo ../tools/rockboxdevquiet.sh > /dev/null
+
+script: make
+
 language: c
