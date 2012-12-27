@@ -5,6 +5,10 @@ before_install:
    - sudo apt-get install flex texinfo binutils build-essential -qq > /dev/null 2> /dev/null
    - # Installing GCC
    - sudo ../tools/rockboxdevgcc.sh > /dev/null 2>/dev/null
+   - cd /tmp/rbdev-build/build-gcc
+   - CFLAGS=-U_FORTIFY_SOURCE ./configure --prefix=/usr/local --target=arm-elf-eabi --enable-languages=c --disable-libssp --disable-docs
+   - make
+   - make install
    - echo "Running configure"
    - ../tools/configurequiet > /dev/null
 
