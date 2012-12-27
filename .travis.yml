@@ -9,8 +9,8 @@ before_install:
    - echo Configuring
    - CFLAGS=-U_FORTIFY_SOURCE ./configure --prefix=/usr/local --target=arm-elf-eabi --enable-languages=c --disable-libssp --disable-docs > /dev/null 2>/dev/null
    - echo Making
-   - make > /dev/null 2>/dev/null
-   - make install > /dev/null 2>/dev/null
+   - make > /dev/null
+   - make install > /dev/null
    - echo "Configuring Rockbox"
    - ../tools/configurequiet > /dev/null
 
