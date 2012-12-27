@@ -3,7 +3,6 @@ before_install:
    - cd build
    - # Installing packages
    - sudo apt-get install flex texinfo binutils build-essential -qq > /dev/null 2> /dev/null
-   - export BUILDFOR=62
    - # Installing GCC
    - sudo ../tools/rockboxdevgcc.sh > /dev/null 2>/dev/null
    - echo "Running configure"
@@ -16,5 +15,8 @@ script: make
 language: c
 
 env:
-   - BUILDTYPE='N'
-   - BUILDTYPE='B'
+   matrix:
+      - BUILDTYPE='N'
+      - BUILDTYPE='B'
+   global:
+      - BUILDFOR=62
