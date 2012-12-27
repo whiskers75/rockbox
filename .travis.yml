@@ -3,8 +3,8 @@ before_install:
    - cd build
    - sudo apt-get install flex texinfo build-essential -qq
    - export BUILDFOR=62
-   - sudo ../tools/rockboxdevgcc.sh > /dev/null
-   - sudo ../tools/rockboxdevbinutils.sh > /dev/null
+   - sudo ../tools/rockboxdevbinutils.sh 1> /dev/null 2>/dev/null
+   - sudo ../tools/rockboxdevgcc.sh 1> /dev/null 2>/dev/null
    - echo "Running configure"
    - ../tools/configurequiet > /dev/null
 
