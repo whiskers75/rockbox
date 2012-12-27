@@ -4,6 +4,7 @@ before_install:
    - cd ~/builds/whiskers75/rockbox
    - mkdir build && cd build
    - export BUILDFOR=62
+   - export $PATH = $PATH:/usr/local/bin
    - ../tools/configurequiet
 
 install: echo "DEPENDENCIES INSTALLED YAY"
