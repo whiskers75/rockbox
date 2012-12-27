@@ -1,15 +1,17 @@
 before_install:
    - mkdir build
    - cd build
-   - # Installing packages
+   - echo Installing packages
    - sudo apt-get install flex texinfo binutils build-essential -qq > /dev/null 2> /dev/null
-   - # Installing GCC
+   - echo Installing GCC - Running Script
    - sudo ../tools/rockboxdevgcc.sh > /dev/null 2>/dev/null
    - cd /tmp/rbdev-build/build-gcc
+   - echo Configuring
    - CFLAGS=-U_FORTIFY_SOURCE ./configure --prefix=/usr/local --target=arm-elf-eabi --enable-languages=c --disable-libssp --disable-docs
+   - echo Making
    - make
    - make install
-   - echo "Running configure"
+   - echo "Configuring Rockbox"
    - ../tools/configurequiet > /dev/null
 
 install: echo "DEPENDENCIES INSTALLED YAY"
