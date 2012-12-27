@@ -7,4 +7,4 @@ before_install:
    - ../tools/configurequiet
 
 install: make
-language: english
+language: c

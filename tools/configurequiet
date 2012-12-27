@@ -3489,7 +3489,7 @@ if [ "$ARG_TYPE" ]; then
   btype=$ARG_TYPE
 else
   echo "Build (N)ormal, (A)dvanced, (S)imulator, (B)ootloader, (C)heckWPS, (D)atabase tool, (W)arble codec tool$gdbstub: (Defaults to N)"
-  btype=`input`;
+  btype='N';
 fi
 
   case $btype in
