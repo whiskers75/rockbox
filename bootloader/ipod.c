@@ -385,6 +385,7 @@ void* main(void)
             haveramos = (memcmp((void*)(DRAM_START+0x20),"portalplayer",12)==0);
             if (haveramos) {
                 /* We have a copy of the retailos in RAM, lets just run it. */
+		printf("RetailOS in RAM, running");
                 return (void*)DRAM_START;
             }
         } else if (rc < EFILE_NOT_FOUND) {
@@ -418,6 +419,7 @@ void* main(void)
             haveramos = (memcmp((void*)(DRAM_START+0x20),"Rockbox\1",8)==0);
             if (haveramos) {
                 /* We have a copy of Rockbox in RAM, lets just run it. */
+		prinf("Rockbox in RAM, running");
                 return (void*)DRAM_START;
             }
         }
