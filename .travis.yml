@@ -1,7 +1,7 @@
 before_install:
    - mkdir build
    - cd build
-   - sudo apt-get install flex -qq
+   - sudo apt-get install flex texinfo -qq
    - export BUILDFOR=62
    - sudo ../tools/rockboxdevquiet.sh
    - ../tools/configurequiet
