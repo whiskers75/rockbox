@@ -1,11 +1,10 @@
 before_install:
    - mkdir build
    - cd build
-   - sudo apt-get install flex texinfo build-essential -qq
+   - # Installing packages
+   - sudo apt-get install flex texinfo binutils build-essential -qq > /dev/null 2> /dev/null
    - export BUILDFOR=62
-   - echo "Installing Binutils"
-   - sudo ../tools/rockboxdevbinutils.sh > /dev/null 2>/dev/null
-   - echo "Installing GCC"
+   - # Installing GCC
    - sudo ../tools/rockboxdevgcc.sh > /dev/null 2>/dev/null
    - echo "Running configure"
    - ../tools/configurequiet > /dev/null
@@ -15,3 +14,7 @@ install: echo "DEPENDENCIES INSTALLED YAY"
 script: make
 
 language: c
+
+env:
+   - BUILDTYPE='N'
+   - BUILDTYPE='B'
