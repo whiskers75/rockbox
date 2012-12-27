@@ -346,7 +346,7 @@ echo "separate multiple targets with spaces"
 echo "(Example: \"s m a\" will build sh, m68k and arm)"
 echo ""
 
-selarch='s m a'
+selarch='a'
 system=`uname -s`
 
 # add target dir to path to ensure the new binutils are used in gcc build
