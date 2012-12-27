@@ -3,7 +3,7 @@ before_install:
    - echo "Running configure"
    - cd ~/builds/whiskers75/rockbox
    - mkdir build && cd build
-   - ../tools/configurequiet > /dev/null
+   - ../tools/configurequiet
 
 install: echo "DEPENDENCIES INSTALLED YAY"
 
