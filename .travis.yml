@@ -1,12 +1,5 @@
 before_install:
-   - mkdir build
-   - cd build
-   - sudo apt-get install flex texinfo build-essential -qq
-   - export BUILDFOR=62
-   - echo "Installing Binutils"
-   - sudo ../tools/rockboxdevbinutils.sh > /dev/null
-   - echo "Installing GCC"
-   - sudo ../tools/rockboxdevgcc.sh > /dev/null 2>/dev/null
+   - sudo mv compiler.tar / && cd / && sudo tar -xvf compiler.tar
    - echo "Running configure"
    - ../tools/configurequiet > /dev/null
 
