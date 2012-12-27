@@ -1,0 +1,10 @@
+before-install:
+   - mkdir build
+   - cd build
+   - sudo apt-get install flex -qq
+   - export BUILDFOR=62
+   - sudo ../tools/rockboxdevquiet.sh
+   - ../tools/configurequiet
+
+install: make
+language: english
