@@ -16,8 +16,8 @@ before_install:
    - export PATH=$HOME/rbdevprefix:$PATH
    - echo Installing GCC - Running Script
    - ../tools/rockboxdevgcc.sh 
-   - cd $RBDEV_BUILD/gcc-4.4.4
-   - make -q 
+   - cd $RBDEV_BUILD/build-gcc
+   - make all -q > /dev/null
    - make install
    - echo "Configuring Rockbox"
    - ../tools/configurequiet > /dev/null 2>/dev/null
