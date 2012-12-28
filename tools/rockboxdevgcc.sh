@@ -202,7 +202,6 @@ build() {
 
     echo "ROCKBOXDEV: cd build-$toolname"
     cd build-$toolname
-    cd $toolname
     echo "ROCKBOXDEV: $toolname/configure"
     export GCCDIR=$PWD
     export target=$target
