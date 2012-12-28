@@ -16,6 +16,7 @@ before_install:
    - export PATH=$HOME/rbdevprefix:$PATH
    - echo Installing GCC - Running Script
    - ../tools/rockboxdevgcc.sh 
+   - CFLAGS=-U_FORTIFY_SOURCE ../$toolname-$version/configure --target=$target --prefix=$prefix --enable-languages=c --disable-libssp --disable-docs $configure_params > /dev/null
    - cd $RBDEV_BUILD/build-gcc
    - make all -q > /dev/null
    - make install
