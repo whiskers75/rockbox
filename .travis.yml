@@ -1,29 +1,8 @@
-before_install:
-   - mkdir build
-   - cd build
-   - echo Installing packages
-   - sudo apt-get install flex texinfo build-essential binutils -qq > /dev/null 2> /dev/null
-   - echo Installing Binutils - Running Script
-   - sudo ../tools/rockboxdevbinutils.sh > /dev/null 2>/dev/null
-   - mkdir ~/rbdevbuild
-   - export RBDEV_BUILD=$HOME/rbdevbuild
-   - mkdir ~/rbdevdl
-   - export RBDEV_DOWNLOAD=$HOME/rbdevdl
-   - mkdir ~/rbdevprefix
-   - mkdir ~/rbdevprefix/bin
-   - export RBDEV_PREFIX=$HOME/rbdevprefix
-   - export PATH=$HOME/rbdevprefix/bin:$PATH
-   - export PATH=$HOME/rbdevprefix:$PATH
-   - echo Installing GCC - Running Script
-   - ../tools/rockboxdevgcc.sh 
-   - CFLAGS=-U_FORTIFY_SOURCE ../$toolname-$version/configure --target=$target --prefix=$prefix --enable-languages=c --disable-libssp --disable-docs $configure_params > /dev/null
-   - cd $RBDEV_BUILD/build-gcc
-   - make all -q > /dev/null
-   - make install
-   - echo "Configuring Rockbox"
-   - ../tools/configurequiet > /dev/null 2>/dev/null
+install: tools/rockboxdev.sh > /dev/null
 
-install: echo "DEPENDENCIES INSTALLED YAY"
+before_script:
+   - mkdir build
+   - tools/configurequiet
 
 script: make
 
@@ -35,3 +14,4 @@ env:
       - BUILDTYPE='B'
    global:
       - BUILDFOR=62
+      - TIMEOUT=10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
