@@ -7,14 +7,8 @@ before_install:
    - sudo ../tools/rockboxdevbinutils.sh > /dev/null 2>/dev/null
    - echo Installing GCC - Running Script
    - sudo ../tools/rockboxdevgcc.sh > /dev/null 2>/dev/null
-   - cd /tmp/rbdev-build/gcc-4.4.4/
-   - echo Configuring
-   - CFLAGS=-U_FORTIFY_SOURCE ./configure --prefix=/usr/local --target=arm-elf-eabi --disable-werror -q > /dev/null
-   - echo Making
-   - make -q
-   - sudo make install -q
    - echo "Configuring Rockbox"
-   - ../tools/configurequiet > /dev/null
+   - ../tools/configurequiet > /dev/null 2>/dev/null
 
 install: echo "DEPENDENCIES INSTALLED YAY"
 

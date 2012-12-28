@@ -202,6 +202,28 @@ build() {
 
     echo "ROCKBOXDEV: cd build-$toolname"
     cd build-$toolname
+
+    echo "ROCKBOXDEV: $toolname/configure"
+    case $toolname in
+        ctng) # ct-ng doesnt support out-of-tree build and the src folder is named differently
+            toolname="crosstool-ng"
+            cp -r ../$toolname-$version/* ../$toolname-$version/.version .
+            ./configure --prefix=$prefix $configure_params
+        ;;
+        *)
+            CFLAGS=-U_FORTIFY_SOURCE ../$toolname-$version/configure --target=$target --prefix=$prefix --enable-languages=c --disable-libssp --disable-docs $configure_params
+        ;;
+    esac
+
+    echo "ROCKBOXDEV: $toolname/make"
+    $make
+
+    echo "ROCKBOXDEV: $toolname/make install"
+    $make install
+
+    echo "ROCKBOXDEV: rm -rf build-$toolname $toolname-$version"
+    cd ..
+    rm -rf build-$toolname $toolname-$version
 }
 
 
@@ -324,7 +346,7 @@ echo "separate multiple targets with spaces"
 echo "(Example: \"s m a\" will build sh, m68k and arm)"
 echo ""
 
-selarch='a'
+selarch=`input`
 system=`uname -s`
 
 # add target dir to path to ensure the new binutils are used in gcc build
