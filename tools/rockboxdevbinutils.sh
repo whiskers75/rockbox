@@ -204,7 +204,26 @@ build() {
     cd build-$toolname
 
     echo "ROCKBOXDEV: $toolname/configure"
-    export BINUTILS=$PWD
+    case $toolname in
+        ctng) # ct-ng doesnt support out-of-tree build and the src folder is named differently
+            toolname="crosstool-ng"
+            cp -r ../$toolname-$version/* ../$toolname-$version/.version .
+            ./configure --prefix=$prefix $configure_params
+        ;;
+        *)
+            CFLAGS=-U_FORTIFY_SOURCE ../$toolname-$version/configure --target=$target --prefix=$prefix --enable-languages=c --disable-libssp --disable-docs $configure_params
+        ;;
+    esac
+
+    echo "ROCKBOXDEV: $toolname/make"
+    $make
+
+    echo "ROCKBOXDEV: $toolname/make install"
+    $make install
+
+    echo "ROCKBOXDEV: rm -rf build-$toolname $toolname-$version"
+    cd ..
+    rm -rf build-$toolname $toolname-$version
 }
 
 
