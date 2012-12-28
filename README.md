@@ -1,19 +1,8 @@
-/***************************************************************************
-*             __________               __   ___.
-*   Open      \______   \ ____   ____ |  | _\_ |__   _______  ___
-*   Source     |       _//  _ \_/ ___\|  |/ /| __ \ /  _ \  \/  /
-*   Jukebox    |    |   (  <_> )  \___|    < | \_\ (  <_> > <  <
-*   Firmware   |____|_  /\____/ \___  >__|_ \|___  /\____/__/\_ \
-*                     \/            \/     \/    \/            \/
-* <img>https://travis-ci.org/whiskers75/rockbox.png?branch=master</img>
-*
-*
-* All files in this archive are subject to the GNU General Public License.
-* See the file COPYING in the source tree root for full license agreement.
-*
-* This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
-* KIND, either express or implied.
-*
-****************************************************************************/
-
+__________               __   ___.
+\______   \ ____   ____ |  | _\_ |__   _______  ___
+ |       _//  _ \_/ ___\|  |/ /| __ \ /  _ \  \/  /
+ |    |   (  <_> )  \___|    < | \_\ (  <_> > <  <
+ |____|_  /\____/ \___  >__|_ \|___  /\____/__/\_ \
+        \/            \/     \/    \/            \/
+<img>https://travis-ci.org/whiskers75/rockbox.png?branch=master</img>
 Repo cloned from Rockbox/rockbox, a mirror of the main RB repo.
