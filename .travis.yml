@@ -1,4 +1,8 @@
-install: sudo apt-get install texinfo flex perl > /dev/null 2>/dev/null && sudo tools/rockboxdev.sh > /dev/null 2>/dev/null
+before_install:
+   - cd
+   - curl -O http://dl.dropbox.com/u/46333495/gcc-arm-elf-eabi.deb
+
+install: sudo dpkg -i gcc-arm-elf-eabi.deb && cd builds/whiskers75/rockbox
 
 before_script:
    - mkdir build
@@ -10,8 +14,9 @@ language: c
 
 env:
    matrix:
-      - BUILDTYPE='N'
-      - BUILDTYPE='B'
-   global:
-      - BUILDFOR=62
-      - TIMEOUT=10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      - BUILDTYPE='N' BUILDFOR=62
+      - BUILDTYPE='B' BUILDFOR=62
+      - BUILDTYPE='N' BUILDFOR=63
+      - BUILDTYPE='B' BUILDFOR=63
+      - BUILDTYPE='N' BUILDFOR=61
+      - BUILDTYPE='B' BUILDFOR=61
