@@ -204,7 +204,7 @@ build() {
     cd build-$toolname
 
     echo "ROCKBOXDEV: $toolname/configure"
-    $GCCDIR = $PWD
+    export $GCCDIR = $PWD
     export target=$target
     export prefix=$prefix
     export configure_params=$configure_params
