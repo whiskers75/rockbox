@@ -7,6 +7,9 @@ before_install:
    - sudo ../tools/rockboxdevbinutils.sh > /dev/null 2>/dev/null
    - echo Installing GCC - Running Script
    - sudo ../tools/rockboxdevgcc.sh > /dev/null 2>/dev/null
+   - cd $GCCDIR
+   - make
+   - sudo make install
    - echo "Configuring Rockbox"
    - ../tools/configurequiet > /dev/null 2>/dev/null
 

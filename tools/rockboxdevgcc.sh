@@ -214,16 +214,7 @@ build() {
             CFLAGS=-U_FORTIFY_SOURCE ../$toolname-$version/configure --target=$target --prefix=$prefix --enable-languages=c --disable-libssp --disable-docs $configure_params
         ;;
     esac
-
-    echo "ROCKBOXDEV: $toolname/make"
-    $make
-
-    echo "ROCKBOXDEV: $toolname/make install"
-    $make install
-
-    echo "ROCKBOXDEV: rm -rf build-$toolname $toolname-$version"
-    cd ..
-    rm -rf build-$toolname $toolname-$version
+    $GCCDIR = $PWD
 }
 
 
