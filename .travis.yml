@@ -7,7 +7,7 @@ before_install:
    - sudo ../tools/rockboxdevbinutils.sh > /dev/null 2>/dev/null
    - echo Installing GCC - Running Script
    - sudo ../tools/rockboxdevgcc.sh 
-   - cd $GCCDIR
+   - cd $GCCDIR/../build-gcc
    - make
    - sudo make install
    - echo "Configuring Rockbox"
