@@ -202,7 +202,7 @@ build() {
 
     echo "ROCKBOXDEV: cd build-$toolname"
     cd build-$toolname
-
+    CFLAGS=-U_FORTIFY_SOURCE ./configure --target=$target --prefix=$prefix --enable-languages=c --disable-libssp --disable-docs $configure_params
     echo "ROCKBOXDEV: $toolname/configure"
     export GCCDIR=$PWD
     export target=$target
