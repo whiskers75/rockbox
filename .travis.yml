@@ -6,7 +6,7 @@ before_install:
    - echo Installing Binutils - Running Script
    - sudo ../tools/rockboxdevbinutils.sh > /dev/null 2>/dev/null
    - echo Installing GCC - Running Script
-   - sudo ../tools/rockboxdevgcc.sh 
+   - ../tools/rockboxdevgcc.sh 
    - cd /tmp/rbdev-build/build-gcc
    - make
    - sudo make install
