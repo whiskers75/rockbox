@@ -9,7 +9,7 @@ before_install:
    - sudo ../tools/rockboxdevgcc.sh > /dev/null 2>/dev/null
    - cd /tmp/rbdev-build/gcc-4.4.4/
    - echo Configuring
-   - CFLAGS=-U_FORTIFY_SOURCE ./configure --prefix=/usr/local --target=arm-elf-eabi --disable-werror > /dev/null 2>/dev/null 
+   - CFLAGS=-U_FORTIFY_SOURCE ./configure --prefix=/usr/local --target=arm-elf-eabi --disable-werror -q > /dev/null
    - echo Making
    - make -q
    - sudo make install -q
