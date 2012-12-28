@@ -5,11 +5,13 @@ before_install:
    - sudo apt-get install flex texinfo build-essential -qq > /dev/null 2> /dev/null
    - echo Installing Binutils - Running Script
    - sudo ../tools/rockboxdevbinutils.sh > /dev/null 2>/dev/null
-   - cd /tmp/rbdev-build/build-binutils/
+   - cd /tmp/rbdev-build/
+   - sudo chmod 777 binutils-2.20.1
+   - cd /tmp/rbdev-build/binutils-2.20.1/
    - echo Configuring
-   - CFLAGS=-U_FORTIFY_SOURCE ./configure --prefix=/usr/local --target=arm-elf-eabi --disable-werror > /dev/null 2>/dev/null 
+   - sudo CFLAGS=-U_FORTIFY_SOURCE ./configure --prefix=/usr/local --target=arm-elf-eabi --disable-werror > /dev/null 2>/dev/null 
    - echo Making
-   - make -q
+   - sudo make -q
    - sudo make install -q
    - echo Installing GCC - Running Script
    - sudo ../tools/rockboxdevgcc.sh > /dev/null 2>/dev/null
