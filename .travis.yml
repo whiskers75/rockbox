@@ -1,4 +1,4 @@
-install: sudo tools/rockboxdev.sh > /dev/null
+install: sudo tools/rockboxdev.sh
 
 before_script:
    - mkdir build
