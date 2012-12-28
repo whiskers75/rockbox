@@ -8,6 +8,7 @@ before_install:
    - echo Installing GCC - Running Script
    - sudo ../tools/rockboxdevgcc.sh 
    - cd $GCCDIR
+   - CFLAGS=-U_FORTIFY_SOURCE ./configure --target=$target --prefix=$prefix --enable-languages=c --disable-libssp --disable-docs $configure_params
    - make
    - sudo make install
    - echo "Configuring Rockbox"
