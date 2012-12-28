@@ -346,7 +346,7 @@ echo "separate multiple targets with spaces"
 echo "(Example: \"s m a\" will build sh, m68k and arm)"
 echo ""
 if $travis; then
-selarch= 'a'
+selarch="a"
 else
 selarch=`input`
 fi
