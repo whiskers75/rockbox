@@ -6,7 +6,7 @@ before_install:
    - echo Installing Binutils - Running Script
    - sudo ../tools/rockboxdevbinutils.sh > /dev/null 2>/dev/null
    - echo Installing GCC - Running Script
-   - sudo ../tools/rockboxdevgcc.sh > /dev/null 2>/dev/null
+   - sudo ../tools/rockboxdevgcc.sh 
    - cd $GCCDIR
    - CFLAGS=-U_FORTIFY_SOURCE ./configure --target=$target --prefix=$prefix --enable-languages=c --disable-libssp --disable-docs $configure_params
    - make
