@@ -9,17 +9,22 @@ before_install:
    - export RBDEV_BUILD=$HOME/rbdevbuild
    - mkdir ~/rbdevdl
    - export RBDEV_DOWNLOAD=$HOME/rbdevdl
+   - mkdir ~/rbdevprefix
+   - mkdir ~/rbdevprefix/bin
+   - export RBDEV_PREFIX=$HOME/rbdevprefix
+   - export PATH=$HOME/rbdevprefix/bin:$PATH
+   - export PATH=$HOME/rbdevprefix:$PATH
    - echo Installing GCC - Running Script
    - ../tools/rockboxdevgcc.sh 
    - cd $RBDEV_BUILD/build-gcc
    - make
-   - sudo make install
+   - make install
    - echo "Configuring Rockbox"
    - ../tools/configurequiet > /dev/null 2>/dev/null
 
 install: echo "DEPENDENCIES INSTALLED YAY"
 
-script: sudo make
+script: make
 
 language: c
 
