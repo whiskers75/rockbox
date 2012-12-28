@@ -7,6 +7,8 @@ before_install:
    - sudo ../tools/rockboxdevbinutils.sh > /dev/null 2>/dev/null
    - mkdir ~/rbdevbuild
    - export RBDEV_BUILD=$HOME/rbdevbuild
+   - mkdir ~/rbdevdl
+   - export RBDEV_DOWNLOAD=$HOME/rbdevdl
    - echo Installing GCC - Running Script
    - ../tools/rockboxdevgcc.sh 
    - cd $RBDEV_BUILD/build-gcc
