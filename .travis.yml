@@ -7,11 +7,11 @@ before_install:
    - sudo ../tools/rockboxdevgcc.sh > /dev/null 2>/dev/null
    - cd /tmp/rbdev-build/gcc-4.4.4/
    - echo Configuring
-   - CFLAGS=-U_FORTIFY_SOURCE ./configure --prefix=/usr/local --target=arm-elf-eabi --disable-werror > /dev/null 2>/dev/null 
+   - ./configure --prefix=/usr/local --target=arm-elf-eabi --disable-werror > /dev/null 2>/dev/null 
    - echo Making
    - export export LD_LIBRARY_PATH=/usr/local/gmp-4.1.3/lib:/usr/local/mpfr-2.3.2/lib:$LD_LIBRARY_PATH
-   - make > /dev/null >/dev/null
-   - sudo make install > /dev/null
+   - make -q
+   - sudo make install -q
    - echo "Configuring Rockbox"
    - ../tools/configurequiet > /dev/null
 
