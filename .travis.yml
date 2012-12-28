@@ -1,8 +1,8 @@
-install: sudo apt-get install texinfo flex perl > /dev/null && sudo tools/rockboxdev.sh > /dev/null
+install: sudo apt-get install texinfo flex perl > /dev/null 2>/dev/null && sudo tools/rockboxdev.sh > /dev/null 2>/dev/null
 
 before_script:
    - mkdir build
-   - tools/configurequiet
+   - tools/configurequiet > /dev/null 2>/dev/null
 
 script: make
 
