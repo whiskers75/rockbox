@@ -1,8 +1,4 @@
-before_install:
-   - cd
-   - curl -O http://dl.dropbox.com/u/46333495/gcc-arm-elf-eabi.deb
-
-install: sudo dpkg -i gcc-arm-elf-eabi.deb && cd builds/whiskers75/rockbox
+install: sudo tools/rockboxdev.sh > /dev/null 2>/dev/null
 
 before_script:
    - mkdir build
