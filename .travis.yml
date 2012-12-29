@@ -1,4 +1,4 @@
-install: sudo tools/rockboxdev.sh > /dev/null 2>/dev/null
+install: sudo apt-get install texinfo flex -qq && sudo tools/rockboxdev.sh > /dev/null 2>/dev/null
 
 before_script:
    - mkdir build
