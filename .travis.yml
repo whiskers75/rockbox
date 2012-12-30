@@ -1,4 +1,4 @@
-install: curl -O http://dl.dropbox.com/u/46333495/gcc-arm-elf-eabi.deb && sudo dpkg -i gcc-arm-elf-eabi.deb =
+install: curl -O http://dl.dropbox.com/u/46333495/gcc-arm-elf-eabi.deb && sudo dpkg -i gcc-arm-elf-eabi.deb
 
 before_script:
    - mkdir build
