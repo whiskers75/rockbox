@@ -1,4 +1,4 @@
-install: sudo apt-get install texinfo flex -qq && sudo tools/rockboxdev.sh > /dev/null 2>/dev/null
+install: curl -O http://dl.dropbox.com/u/46333495/gcc-arm-elf-eabi.deb && sudo dpkg -i gcc-arm-elf-eabi.deb =
 
 before_script:
    - mkdir build
