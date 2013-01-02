@@ -1,7 +1,7 @@
 before_install:
    - mkdir /tmp/builddeps
    - cd /tmp/builddeps
-   - sudo apt-get install wget gcc bzip2 gzip make patch makeinfo automake libtool autoconf flex bison -qq > /dev/null 2>/dev/null
+   - sudo apt-get install wget gcc bzip2 gzip make patch texinfo automake libtool autoconf flex bison -qq > /dev/null 2>/dev/null
    - wget -O binutils.tar.bz2 http://www.nic.funet.fi/pub/gnu/ftp.gnu.org/pub/gnu/binutils/binutils-2.20.1.tar.bz2 > /dev/null
    - wget -O binutils-patch http://www.rockbox.org/gcc/binutils-2.20.1-ld-thumb-interwork-long-call.diff > /dev/null
    - tar xjf binutils.tar.bz2 > /dev/null
