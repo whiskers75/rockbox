@@ -14,8 +14,8 @@ before_install:
    - cd gcc-4.4.4
    - patch -p1 < "../gcc-patch" > /dev/null
    - cd ../
-   - mkdir build_gcc
-   - cd build_gcc
+   - mkdir build-gcc
+   - cd build-gcc
    - wget -O gmp.tar.bz2 http://www.nic.funet.fi/pub/gnu/ftp.gnu.org/pub/gnu/gmp/gmp-4.3.2.tar.bz2 > /dev/null
    - wget -O mpfr.tar.bz2 http://www.nic.funet.fi/pub/gnu/ftp.gnu.org/pub/gnu/mpfr/mpfr-2.4.2.tar.bz2 > /dev/null
    - wget -O mpc.tar.gz http://www.multiprecision.org/mpc/download/mpc-0.8.1.tar.gz > /dev/null
