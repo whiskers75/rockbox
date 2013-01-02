@@ -1,5 +1,4 @@
 before_install:
-   - echo -e "\033[31mwhiskers75/rockbox Travis builder (ARM version) v1\nBuild type: $BUILDTYPE Target no $BUILDFOR\nDownloading required components\033[37m"
    - mkdir /tmp/builddeps
    - cd /tmp/builddeps
    - sudo apt-get install wget gcc bzip2 gzip make patch makeinfo automake libtool autoconf flex bison -qq > /dev/null 2>/dev/null
@@ -27,27 +26,24 @@ before_install:
    - ln -s mpfr-2.4.2 mpfr
    - ln -s mpc-0.8.1.tar.gz mpc
    - cd ../
-   - echo -e "\033[31mDownloading and patching completed. Building required components.\033[37m"
    - mkdir build-gcc
    - mkdir build-binutils
    - cd build-binutils
    - CFLAGS=-U_FORTIFY_SOURCE ../binutils-2.20.1/configure --target=arm-elf-eabi --prefix=/usr/local --enable-languages=c --disable-libssp --disable-docs --disable-werror > /dev/null 2>/dev/null
    - make > /dev/null 2>/dev/null
    - sudo make install >/dev/null 2>/dev/null
-   - echo -e "\033[31mInstallation of binutils completed.\033[37m"
    - cd ../
    - cd build-gcc
    - CFLAGS=-U_FORTIFY_SOURCE ../gcc-4.4.4/configure --target=arm-elf-eabi --prefix=/usr/local --enable-languages=c --disable-libssp --disable-docs "gmp mpfr" > /dev/null 2>/dev/null
    - make > /dev/null 2>/dev/null
    - sudo make install > /dev/null 2>/dev/null
    - cd ../
-   - echo -e "\033[31mInstallation of gcc completed. Configuring whiskers75/rockbox.\033[37m"
    - cd ~/builds/whiskers75/rockbox
    - mkdir build
    - cd build
    - ../tools/configurequiet >/dev/null 2>/dev/null
 
-install: echo -e "\033[31mBuilding whiskers75/rockbox for target $BUILDFOR, commit $TRAVIS_COMMIT\033[37m"
+install: echo -e "Building whiskers75/rockbox for target $BUILDFOR, commit $TRAVIS_COMMIT"
 
 script: make
 
