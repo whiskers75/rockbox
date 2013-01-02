@@ -282,8 +282,10 @@ function start_round(level, goal, nrBalls, total)
         set_foreground(DEFAULT_FOREGROUND_COLOR)
         draw_positioned_string(0, 0, string.format("%d balls expanded", nrExpandedBalls))
         draw_positioned_string(0, 1, string.format("Level %d", level))
-        draw_positioned_string(1, 1, string.format("%d level points", score))
-        -- draw_positioned_string(1, 0, string.format("%d total points", total+score)) Does not work on clip+
+        draw_positioned_string(1, 0, string.format("%d total points", total+score))
+        if (rb.LCD_WIDTH <= 64) {
+        draw_positioned_string(1, 1, string.format("%d level points", score)) -- Does not work on clip+
+        }
 
         for _, ball in ipairs(balls) do
             ball:step()
