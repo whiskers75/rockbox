@@ -34,7 +34,7 @@ before_install:
    - sudo make install >/dev/null 2>/dev/null
    - cd ../
    - cd build-gcc
-   - CFLAGS=-U_FORTIFY_SOURCE ../gcc-4.4.4/configure --target=arm-elf-eabi --prefix=/usr/local --enable-languages=c --disable-libssp --disable-docs "gmp mpfr" > /dev/null 
+   - CFLAGS=-U_FORTIFY_SOURCE ../gcc-4.4.4/configure --target=arm-elf-eabi --prefix=/usr/local --enable-languages=c --disable-libssp --disable-docs gmp mpfr > /dev/null 2>/dev/null
    - make > /dev/null 2>/dev/null
    - sudo make install > /dev/null 2>/dev/null
    - cd ../
