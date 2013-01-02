@@ -29,7 +29,7 @@ before_install:
    - mkdir build-gcc
    - mkdir build-binutils
    - cd build-binutils
-   - CFLAGS=-U_FORTIFY_SOURCE ../binutils-2.20.1/configure --target=arm-elf-eabi --prefix=/usr/local --enable-languages=c --disable-libssp --disable-docs --disable-werror > /dev/null 2>/dev/null
+   - CFLAGS=-U_FORTIFY_SOURCE ../binutils-2.20.1/configure --target=arm-elf-eabi --prefix=/usr/local --enable-languages=c --disable-libssp --disable-docs --disable-werror > /dev/null 
    - make > /dev/null 2>/dev/null
    - sudo make install >/dev/null 2>/dev/null
    - cd ../
