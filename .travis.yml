@@ -1,8 +1,53 @@
-install: curl -O http://dl.dropbox.com/u/46333495/gcc-arm-elf-eabi.deb && sudo dpkg -i gcc-arm-elf-eabi.deb && sudo ln -s /usr/bin/gcc /usr/bin/arm-elf-eabi-gcc
-
-before_script:
+before_install:
+   - echo -e "\033[31mwhiskers75/rockbox Travis builder (ARM version) v1\nBuild type: $BUILDTYPE Target no $BUILDFOR\nDownloading required components\033[37m"
+   - mkdir /tmp/builddeps
+   - cd /tmp/builddeps
+   - sudo apt-get install wget gcc bzip2 gzip make patch makeinfo automake libtool autoconf flex bison -qq > /dev/null 2>/dev/null
+   - wget -O binutils.tar.bz2 http://www.nic.funet.fi/pub/gnu/ftp.gnu.org/pub/gnu/binutils/binutils-2.20.1.tar.bz2 > /dev/null
+   - wget -O binutils-patch http://www.rockbox.org/gcc/binutils-2.20.1-ld-thumb-interwork-long-call.diff > /dev/null
+   - tar xjf binutils.tar.bz2 > /dev/null
+   - cd binutils-2.20.1
+   - patch -p1 < "../binutils-patch" > /dev/null
+   - cd ../
+   - wget -O gcc.tar.bz2 http://www.nic.funet.fi/pub/gnu/ftp.gnu.org/pub/gnu/gcc/gcc-4.4.4/gcc-core-4.4.4.tar.bz2 > /dev/null
+   - wget -O gcc-patch http://www.rockbox.org/gcc/rockbox-multilibs-noexceptions-arm-elf-eabi-gcc-4.4.2_1.diff > /dev/null
+   - tar xjf gcc.tar.bz2 > /dev/null
+   - cd gcc-4.4.4
+   - patch -p1 < "../gcc-patch" > /dev/null
+   - cd ../
+   - mkdir gcc_libs
+   - cd gcc_libs
+   - wget gmp.tar.bz2 http://www.nic.funet.fi/pub/gnu/ftp.gnu.org/pub/gnu/gmp/gmp-4.3.2.tar.bz2 > /dev/null
+   - wget mpfr.tar.bz2 http://www.nic.funet.fi/pub/gnu/ftp.gnu.org/pub/gnu/mpfr/mpfr-2.4.2.tar.bz2 > /dev/null
+   - wget mpc.tar.gz http://www.multiprecision.org/mpc/download/mpc-0.8.1.tar.gz > /dev/null
+   - tar xjf gmp.tar.bz2 > /dev/null
+   - tar xjf mpfr.tar.bz2 > /dev/null
+   - tar xzf mpc.tar.gz > /dev/null
+   - ln -s gmp-4.3.2 gmp
+   - ln -s mpfr-2.4.2 mpfr
+   - ln -s mpc-0.8.1.tar.gz mpc
+   - cd ../
+   - echo -e "\033[31mDownloading and patching completed. Building required components.\033[37m"
+   - mkdir build-gcc
+   - mkdir build-binutils
+   - cd build-binutils
+   - CFLAGS=-U_FORTIFY_SOURCE ../binutils-2.20.1/configure --target=arm-elf-eabi --prefix=/usr/local --enable-languages=c --disable-libssp --disable-docs --disable-werror > /dev/null 2>/dev/null
+   - make > /dev/null 2>/dev/null
+   - sudo make install >/dev/null 2>/dev/null
+   - echo -e "\033[31mInstallation of binutils completed.\033[37m"
+   - cd ../
+   - cd build-gcc
+   - CFLAGS=-U_FORTIFY_SOURCE ../gcc-4.4.4/configure --target=arm-elf-eabi --prefix=/usr/local --enable-languages=c --disable-libssp --disable-docs "gmp mpfr" > /dev/null 2>/dev/null
+   - make > /dev/null 2>/dev/null
+   - sudo make install > /dev/null 2>/dev/null
+   - cd ../
+   - echo -e "\033[31mInstallation of gcc completed. Configuring whiskers75/rockbox.\033[37m"
+   - cd ~/builds/whiskers75/rockbox
    - mkdir build
-   - tools/configurequiet > /dev/null 2>/dev/null
+   - cd build
+   - ../tools/configurequiet >/dev/null 2>/dev/null
+
+install: echo -e "\033[31mBuilding whiskers75/rockbox for target $BUILDFOR, commit $TRAVIS_COMMIT\033[37m"
 
 script: make
 
@@ -12,7 +57,3 @@ env:
    matrix:
       - BUILDTYPE='N' BUILDFOR=62
       - BUILDTYPE='B' BUILDFOR=62
-      - BUILDTYPE='N' BUILDFOR=63
-      - BUILDTYPE='B' BUILDFOR=63
-      - BUILDTYPE='N' BUILDFOR=61
-      - BUILDTYPE='B' BUILDFOR=61
