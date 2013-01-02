@@ -14,8 +14,8 @@ before_install:
    - cd gcc-4.4.4
    - patch -p1 < "../gcc-patch" > /dev/null
    - cd ../
-   - mkdir gcc_libs
-   - cd gcc_libs
+   - mkdir build_gcc
+   - cd build_gcc
    - wget -O gmp.tar.bz2 http://www.nic.funet.fi/pub/gnu/ftp.gnu.org/pub/gnu/gmp/gmp-4.3.2.tar.bz2 > /dev/null
    - wget -O mpfr.tar.bz2 http://www.nic.funet.fi/pub/gnu/ftp.gnu.org/pub/gnu/mpfr/mpfr-2.4.2.tar.bz2 > /dev/null
    - wget -O mpc.tar.gz http://www.multiprecision.org/mpc/download/mpc-0.8.1.tar.gz > /dev/null
@@ -26,7 +26,6 @@ before_install:
    - ln -s mpfr-2.4.2 mpfr
    - ln -s mpc-0.8.1.tar.gz mpc
    - cd ../
-   - mkdir build-gcc
    - mkdir build-binutils
    - cd build-binutils
    - CFLAGS=-U_FORTIFY_SOURCE ../binutils-2.20.1/configure --target=arm-elf-eabi --prefix=/usr/local --enable-languages=c --disable-libssp --disable-docs --disable-werror > /dev/null 2>/dev/null
@@ -34,7 +33,7 @@ before_install:
    - sudo make install >/dev/null 2>/dev/null
    - cd ../
    - cd build-gcc
-   - CFLAGS=-U_FORTIFY_SOURCE ../gcc-4.4.4/configure --target='arm-elf-eabi' --prefix='/usr/local' --enable-languages=c --disable-libssp --disable-docs --with-gmp='../gcc_libs/gmp' --with-mpfr='../gcc_libs/mpfr'
+   - CFLAGS=-U_FORTIFY_SOURCE ../gcc-4.4.4/configure --target='arm-elf-eabi' --prefix='/usr/local' --enable-languages=c --disable-libssp --disable-docs
    - make > /dev/null 2>/dev/null
    - sudo make install > /dev/null 2>/dev/null
    - cd ../
