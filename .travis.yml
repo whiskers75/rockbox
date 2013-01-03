@@ -51,4 +51,5 @@ language: c
 env:
    matrix:
       - BUILDTYPE='N' BUILDFOR=62
+   allow_failures:
       - BUILDTYPE='B' BUILDFOR=62
