@@ -50,4 +50,4 @@ language: c
 env:
    matrix:
       - BUILDTYPE='N' BUILDFOR=62
-      - BUILDTYPE='N' BUILDFOR=
+      - BUILDTYPE='N' BUILDFOR=25
