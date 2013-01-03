@@ -40,9 +40,8 @@ before_install:
    - cd ~/builds/whiskers75/rockbox
    - mkdir build
    - cd build
-   - ../tools/configurequiet >/dev/null 2>/dev/null
 
-install: echo -e "Building whiskers75/rockbox for target $BUILDFOR, commit $TRAVIS_COMMIT"
+install: ../tools/configurequiet >/dev/null 2>/dev/null && echo -e "Building whiskers75/rockbox for target $BUILDFOR, commit $TRAVIS_COMMIT"
 
 script: make
 
@@ -51,5 +50,4 @@ language: c
 env:
    matrix:
       - BUILDTYPE='N' BUILDFOR=62
-   allow_failures:
-      - BUILDTYPE='B' BUILDFOR=62
+      - BUILDTYPE='N' BUILDFOR=
