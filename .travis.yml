@@ -20,7 +20,7 @@ before_install:
    - wget -O mpfr.tar.bz2 http://www.nic.funet.fi/pub/gnu/ftp.gnu.org/pub/gnu/mpfr/mpfr-2.4.2.tar.bz2 > /dev/null
    - wget -O mpc.tar.gz http://www.multiprecision.org/mpc/download/mpc-0.8.1.tar.gz > /dev/null
    - tar xjf gmp.tar.bz2 > /dev/null
-   - tar xjf mpfr.tar.bz2 > /dev/null
+   - tar xjf mpfr.tar.bz2 > /dev/null 
    - tar xzf mpc.tar.gz > /dev/null
    - ln -s gmp-4.3.2 gmp
    - ln -s mpfr-2.4.2 mpfr
@@ -28,14 +28,16 @@ before_install:
    - cd ../
    - mkdir build-binutils
    - cd build-binutils
+   - export FAIL="binutils"
    - CFLAGS=-U_FORTIFY_SOURCE ../binutils-2.20.1/configure --target=arm-elf-eabi --prefix=/usr/local --enable-languages=c --disable-libssp --disable-docs --disable-werror > /dev/null 2>/dev/null
    - make -j > /dev/null 2>/dev/null
    - sudo make install >/dev/null 2>/dev/null
    - cd ../
    - cd build-gcc
+   - export FAIL="gcc"
    - CFLAGS=-U_FORTIFY_SOURCE ../gcc-4.4.4/configure --target='arm-elf-eabi' --prefix='/usr/local' --enable-languages=c --disable-libssp --disable-docs > /dev/null 2> /dev/null
    
-install: make -j > /dev/null 2>/dev/null && echo -e "Building whiskers75/rockbox for target $BUILDFOR, commit $TRAVIS_COMMIT"
+install: sudo make -j100 > /dev/null 2>/dev/null
 
 before_script:
    - sudo make install > /dev/null 2>/dev/null
@@ -43,15 +45,15 @@ before_script:
    - cd ~/builds/whiskers75/rockbox
    - mkdir build
    - cd build
+   - export FAIL="rockbox"
    - ../tools/configurequiet >/dev/null 2>/dev/null
 
-script: make
+script: make && export FAIL="none"
 
 after_success:
    - echo "Build Succeeded!"
 after_failure:
-   - echo -e "Build Failed\nIf it was a timeout error, restart the build as that is a Travis bug!"
-
+   - echo "Building component $FAIL failed!"
 
 language: c
 
