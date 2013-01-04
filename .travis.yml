@@ -50,7 +50,7 @@ after_success:
    - sudo apt-get update -qq > /dev/null
    - sudo apt-get install plowshare -qq > /dev/null
    - sudo tar -cvf rbtools.tar /usr/local
-   - plowup mediafire rbtools.tar
+   - plowup megashares rbtools.tar
 
 
 language: c
