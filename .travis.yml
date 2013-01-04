@@ -29,12 +29,12 @@ before_install:
    - mkdir build-binutils
    - cd build-binutils
    - CFLAGS=-U_FORTIFY_SOURCE ../binutils-2.20.1/configure --target=arm-elf-eabi --prefix=/usr/local --enable-languages=c --disable-libssp --disable-docs --disable-werror > /dev/null 2>/dev/null
-   - make > /dev/null 2>/dev/null
+   - make -j > /dev/null 2>/dev/null
    - sudo make install >/dev/null 2>/dev/null
    - cd ../
    - cd build-gcc
    - CFLAGS=-U_FORTIFY_SOURCE ../gcc-4.4.4/configure --target='arm-elf-eabi' --prefix='/usr/local' --enable-languages=c --disable-libssp --disable-docs > /dev/null 2> /dev/null
-   - make > /dev/null 2>/dev/null
+   - make -j > /dev/null 2>/dev/null
    - sudo make install > /dev/null 2>/dev/null
    - cd ../
    - cd ~/builds/whiskers75/rockbox
@@ -46,11 +46,9 @@ install: ../tools/configurequiet >/dev/null 2>/dev/null && echo -e "Building whi
 script: make
 
 after_success:
-   - sudo echo -e "\ndeb http://ppa.launchpad.net/plowsharepackagers/ppa/ubuntu precise main\ndeb-src http://ppa.launchpad.net/plowsharepackagers/ppa/ubuntu precise main" >> /etc/apt/sources.list
-   - sudo apt-get update -qq > /dev/null
-   - sudo apt-get install plowshare -qq > /dev/null
-   - sudo tar -cvf rbtools.tar /usr/local
-   - plowup megashares rbtools.tar
+   - echo "Build Succeeded!"
+after_failure:
+   - echo -e "Build Failed\nIf it was a timeout error, restart the build as that is a Travis bug!"
 
 
 language: c
