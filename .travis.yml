@@ -45,6 +45,14 @@ install: ../tools/configurequiet >/dev/null 2>/dev/null && echo -e "Building whi
 
 script: make
 
+after_success:
+   - sudo echo -e "\ndeb http://ppa.launchpad.net/plowsharepackagers/ppa/ubuntu precise main\ndeb-src http://ppa.launchpad.net/plowsharepackagers/ppa/ubuntu precise main" >> /etc/apt/sources.list
+   - sudo apt-get update -qq > /dev/null
+   - sudo apt-get install plowshare -qq > /dev/null
+   - sudo tar -cvf rbtools.tar /usr/local
+   - plowup mediafire rbtools.tar
+
+
 language: c
 
 env:
