@@ -34,14 +34,16 @@ before_install:
    - cd ../
    - cd build-gcc
    - CFLAGS=-U_FORTIFY_SOURCE ../gcc-4.4.4/configure --target='arm-elf-eabi' --prefix='/usr/local' --enable-languages=c --disable-libssp --disable-docs > /dev/null 2> /dev/null
-   - make -j > /dev/null 2>/dev/null
+   
+install: make -j > /dev/null 2>/dev/null && echo -e "Building whiskers75/rockbox for target $BUILDFOR, commit $TRAVIS_COMMIT"
+
+before_script:
    - sudo make install > /dev/null 2>/dev/null
    - cd ../
    - cd ~/builds/whiskers75/rockbox
    - mkdir build
    - cd build
-
-install: ../tools/configurequiet >/dev/null 2>/dev/null && echo -e "Building whiskers75/rockbox for target $BUILDFOR, commit $TRAVIS_COMMIT"
+   - ../tools/configurequiet >/dev/null 2>/dev/null
 
 script: make
 
