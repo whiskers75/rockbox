@@ -220,7 +220,7 @@ function start_round(level, goal, nrBalls, total)
     -- Initialize the balls
     for _=1,nrBalls do
         table.insert(balls, Ball:new())
-    end
+    then end
 
     -- Make sure there are no unwanted touchscreen presses
     rb.button_clear_queue()
