@@ -35,18 +35,18 @@ local DEFAULT_FOREGROUND_COLOR = rb.lcd_get_foreground ~= nil
 
 local levels = {
             --  {GOAL, TOTAL_BALLS},
-                {1,   5},
-                {2,  10},
-                {4,  15},
-                {6,  20},
-                {10, 25},
-                {15, 30},
-                {18, 35},
-                {22, 40},
-                {30, 45},
-                {37, 50},
-                {48, 55},
-                {55, 60}
+                {1,   6},
+                {2,  5},
+                {4,  7},
+                {6,  10},
+                {10, 13},
+                {15, 18},
+                {18, 21},
+                {22, 25},
+                {30, 33},
+                {37, 40},
+                {48, 50},
+                {55, 56}
            }
 
 local Ball = {
@@ -284,7 +284,7 @@ function start_round(level, goal, nrBalls, total)
         draw_positioned_string(0, 1, string.format("Level %d", level))
         draw_positioned_string(1, 0, string.format("%d total points", total+score))
         if (rb.LCD_WIDTH <= 64) {
-        draw_positioned_string(1, 1, string.format("%d level points", score)) -- Does not work on clip+
+        draw_positioned_string(1, 1, string.format("%d level points", score)) -- Does not work on clip+ or targets with lcd width lower than 64
         }
 
         for _, ball in ipairs(balls) do
