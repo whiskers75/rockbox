@@ -755,6 +755,7 @@ static void init(void)
     settings_apply_skins();
     CHART(">settings_apply_skins");
 }
+#endif
 #if CONFIG_RTC
 #include "timefuncs.h"
 #ifdef HAVE_BACKLIGHT_BRIGHTNESS
