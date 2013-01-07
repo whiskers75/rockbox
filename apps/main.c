@@ -770,6 +770,7 @@ backlight_set_brightness(global_settings.brightness);
 #endif
 #endif
 #endif
+#endif
 #ifdef CPU_PP
 void cop_main(void) MAIN_NORETURN_ATTR;
 void cop_main(void)
