@@ -755,7 +755,20 @@ static void init(void)
     settings_apply_skins();
     CHART(">settings_apply_skins");
 }
-
+#if CONFIG_RTC
+#include "timefuncs.h"
+#ifdef HAVE_BACKLIGHT_BRIGHTNESS
+/* whiskers75's day and night code */
+int time = get_time();
+int hour = time->tm_hour; /* get hour */
+#if global_settings.dnenabled/* if enabled */
+#if hour > global_settings.night /* is it night yet? */
+backlight_set_brightness(global_settings.nightbright);
+#if hour < global_settings.night /* is it day? */
+backlight_set_brightness(global_settings.brightness);
+#endif
+#endif
+#endif
 #ifdef CPU_PP
 void cop_main(void) MAIN_NORETURN_ATTR;
 void cop_main(void)
