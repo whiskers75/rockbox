@@ -50,11 +50,6 @@ before_script:
 
 script: make && export FAIL="none"
 
-after_success:
-   - echo "Build Succeeded!"
-after_failure:
-   - echo "Building component $FAIL failed!"
-
 language: c
 
 env:
