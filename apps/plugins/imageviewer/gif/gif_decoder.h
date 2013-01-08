@@ -18,7 +18,7 @@
  *
  ****************************************************************************/
 
-#define GIF_MAX_FRAMES 32
+#define GIF_MAX_FRAMES 64
 
 struct gif_decoder {
     unsigned char *mem;
