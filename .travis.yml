@@ -47,8 +47,9 @@ before_script:
    - cd build
    - export FAIL="rockbox"
    - ../tools/configurequiet >/dev/null 2>/dev/null
+   - clear
 
-script: make && export FAIL="none"
+script: make 
 
 
 
