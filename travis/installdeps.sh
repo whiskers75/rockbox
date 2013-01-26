@@ -211,15 +211,15 @@ build() {
             ./configure --prefix=$prefix $configure_params
         ;;
         *)
-            CFLAGS=-U_FORTIFY_SOURCE ../$toolname-$version/configure --target=$target --prefix=$prefix --enable-languages=c --disable-libssp --disable-docs $configure_params
+            CFLAGS=-U_FORTIFY_SOURCE ../$toolname-$version/configure --target=$target --prefix=$prefix --enable-languages=c --disable-libssp --disable-docs $configure_params 2>/dev/null
         ;;
     esac
 
     echo "ROCKBOXDEV: $toolname/make"
-    $make
+    $make -s 
 
     echo "ROCKBOXDEV: $toolname/make install"
-    $make install
+    $make -s install 
 
     echo "ROCKBOXDEV: rm -rf build-$toolname $toolname-$version"
     cd ..
