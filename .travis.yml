@@ -1,4 +1,6 @@
-install: sudo travis/installdeps.sh
+before_install: mkdir /tmp/trash
+
+install: sudo travis/installdeps.sh | split -b 1 - /tmp/trash/x | cat /tmp/trash/xaa
 
 before_script:
    - mkdir build && cd build && ../travis/configure.sh
