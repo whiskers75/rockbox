@@ -345,11 +345,7 @@ echo "r   - arm-app  (Samsung ypr0)"
 echo "separate multiple targets with spaces"
 echo "(Example: \"s m a\" will build sh, m68k and arm)"
 echo ""
-if $travis; then
-selarch="a"
-else
-selarch=`input`
-fi
+selarch='s m a i r'
 system=`uname -s`
 
 # add target dir to path to ensure the new binutils are used in gcc build
