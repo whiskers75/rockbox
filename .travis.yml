@@ -3,7 +3,7 @@ install: sudo travis/installdeps.sh
 before_script:
    - mkdir build && cd build && ../travis/configure.sh
 
-script: clear && echo -e "\n\nBUILDING whiskers75/rockbox:$TRAVIS_BRANCH $x\nJOB NO $TRAVIS_JOB_ID\nCOMMIT $TRAVIS_COMMIT\nPULL REQUEST $TRAVIS_PULL_REQUEST\n\n" && make
+script: printf "\ec\n\nBUILDING whiskers75/rockbox:$TRAVIS_BRANCH $x\nJOB NO $TRAVIS_JOB_ID\nCOMMIT $TRAVIS_COMMIT\nPULL REQUEST $TRAVIS_PULL_REQUEST\n\n" && make
 
 language: c
 
