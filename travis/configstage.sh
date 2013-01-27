@@ -1337,7 +1337,7 @@ cat <<EOF
  207) Android x86
 EOF
 
-  buildfor=`input`;
+  buildfor=$BUILDFOR;
 
 fi
   # Set of tools built for all target platforms:
