@@ -44,7 +44,9 @@ fi
 
 # These are the tools this script requires and depends upon.
 reqtools="gcc bzip2 gzip make patch makeinfo automake libtool autoconf flex bison"
-sudo apt-get install gcc bzip2 gzip make patch makeinfo automake libtool autoconf flex bison -qq 
+echo "ROCKBOXDEV: Installing prerequisites"
+sudo apt-get install gcc bzip2 gzip make patch texinfo automake libtool autoconf flex bison -qq > /dev/null 2>/dev/null
+echo "ROCKBOXDEV: Done"
 ##############################################################################
 # Functions:
 
