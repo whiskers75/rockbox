@@ -1,5 +1,7 @@
 #!/bin/sh
 
+
+
 # Abort execution as soon as an error is encountered
 # That way the script do not let the user think the process completed correctly
 # and leave the opportunity to fix the problem and restart compilation where
@@ -26,7 +28,7 @@ builddir="${RBDEV_BUILD:-/tmp/rbdev-build}"
 if [ -f "`which gmake 2>/dev/null`" ]; then
     make="gmake"
 else
-    make="make"
+    make="make -s --debug=j"
 fi
 
 if [ -z $GNU_MIRROR ] ; then
@@ -35,7 +37,11 @@ fi
 
 # These are the tools this script requires and depends upon.
 reqtools="gcc bzip2 gzip make patch makeinfo automake libtool autoconf flex bison"
-sudo apt-get install gcc bzip2 gzip make patch texinfo automake libtool autoconf flex bison
+sudo apt-get install gcc bzip2 gzip make patch texinfo automake wget libtool autoconf flex bison -qq > /dev/null 2>/dev/null
+wget -O plowshare.deb http://plowshare.googlecode.com/files/plowshare4_1~git20130126.0caced8-1_all.deb
+sudo dpkg -i plowshare.deb > /dev/null 2>/dev/null
+sudo apt-get install -f -qq > /dev/null 2>/dev/null
+echo "Plowshare installed"
 ##############################################################################
 # Functions:
 
@@ -100,7 +106,6 @@ build() {
     patch="$4"
     configure_params="$5"
     needs_libs="$6"
-
     patch_url="http://www.rockbox.org/gcc"
 
     case $toolname in
@@ -149,7 +154,7 @@ build() {
     cd $builddir
 
     echo "ROCKBOXDEV: extracting $file"
-    tar xjf $dlwhere/$file
+    tar xjf $dlwhere/$file > /dev/null
 
     # do we have a patch?
     if test -n "$patch"; then
@@ -217,10 +222,10 @@ build() {
     esac
     printf "\ec"
     echo "ROCKBOXDEV: $toolname/make"
-    $make -s 
+    $make
     printf "\ec"
     echo "ROCKBOXDEV: $toolname/make install"
-    $make -s install 
+    $make 
     printf "\ec"
     echo "ROCKBOXDEV: rm -rf build-$toolname $toolname-$version"
     cd ..

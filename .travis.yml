@@ -1,11 +1,9 @@
-before_install: mkdir /tmp/trash
-
-install: sudo travis/installdeps.sh | split -b 1 - /tmp/trash/x | cat /tmp/trash/xaa
+install: printf "\n\nBUILDING whiskers75/rockbox:$TRAVIS_BRANCH $x\nJOB NO $TRAVIS_JOB_ID\nCOMMIT $TRAVIS_COMMIT\nPULL REQUEST $TRAVIS_PULL_REQUEST\n\n\nINSTALLING BUILD DEPENDENCIES FOR ARM TARGETS\n" && sudo travis/installdeps.sh | echo -n '.'
 
 before_script:
-   - mkdir build && cd build && ../travis/configure.sh
+   - mkdir build && cd build && printf "\n\nCONFIGURING whiskers75/rockbox\n" ../travis/configure.sh | echo -n '.'
 
-script: printf "\ec\n\nBUILDING whiskers75/rockbox:$TRAVIS_BRANCH $x\nJOB NO $TRAVIS_JOB_ID\nCOMMIT $TRAVIS_COMMIT\nPULL REQUEST $TRAVIS_PULL_REQUEST\n\n" && make
+script: printf "\n\nRUNNING MAKE for whiskers75/rockbox\n"make
 
 language: c
 
