@@ -1,5 +1,5 @@
 {
-while sleep 5
+while sleep 1
 do 
 printf .
 done

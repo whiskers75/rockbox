@@ -1,6 +1,6 @@
 install: printf "\n\nBUILDING whiskers75/rockbox:$TRAVIS_BRANCH $x\nJOB NO $TRAVIS_JOB_ID\nCOMMIT $TRAVIS_COMMIT\nPULL REQUEST $TRAVIS_PULL_REQUEST\n\n\nINSTALLING BUILD DEPENDENCIES FOR ARM TARGETS\n" && sudo travis/install.sh
 before_script:
-   - mkdir build && cd build && printf "\n\nCONFIGURING whiskers75/rockbox\n" && sudo ../travis/configstage.sh
+   - mkdir build && cd build && printf "\n\nCONFIGURING whiskers75/rockbox\n" && sudo ../travis/configure.sh
 
 script: printf "\n\nRUNNING MAKE for whiskers75/rockbox\n" && make
 
