@@ -5,7 +5,6 @@ printf .
 done
 } & 
 export dotloop=$!
-#!/bin/sh
 
 
 
@@ -222,15 +221,15 @@ build() {
             ./configure --prefix=$prefix $configure_params
         ;;
         *)
-            CFLAGS=-U_FORTIFY_SOURCE ../$toolname-$version/configure --target=$target --prefix=$prefix --enable-languages=c --disable-libssp --disable-docs $configure_params > /dev/null 2>/dev/null
+            CFLAGS=-U_FORTIFY_SOURCE ../$toolname-$version/configure --target=$target --prefix=$prefix --enable-languages=c --disable-libssp --disable-docs $configure_params 2>/dev/null 0>/dev/null 1>/dev/null
         ;;
     esac
     printf ""
     echo "ROCKBOXDEV: $toolname/make"
-    $make > /dev/null
+    $make -s V=0 > /dev/null 2>/dev/null
     printf ""
     echo "ROCKBOXDEV: $toolname/make install"
-    sudo $make install > /dev/null
+    sudo $make install -S V=0 > /dev/null 2>/dev/null
     printf ""
     echo "ROCKBOXDEV: rm -rf build-$toolname $toolname-$version"
     cd ..
