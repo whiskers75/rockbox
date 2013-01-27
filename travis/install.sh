@@ -225,13 +225,13 @@ build() {
         ;;
     esac
     printf ""
-    echo "ROCKBOXDEV: $toolname/make"
+    printf "\nROCKBOXDEV: $toolname/make"
     $make -s V=0 > /dev/null 2>/dev/null
     printf ""
-    echo "ROCKBOXDEV: $toolname/make install"
+    printf "\nROCKBOXDEV: $toolname/make install"
     sudo $make install -S V=0 > /dev/null 2>/dev/null
     printf ""
-    echo "ROCKBOXDEV: rm -rf build-$toolname $toolname-$version"
+    printf "\nROCKBOXDEV: rm -rf build-$toolname $toolname-$version"
     cd ..
     rm -rf build-$toolname $toolname-$version
 }
