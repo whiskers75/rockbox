@@ -214,7 +214,7 @@ build() {
     cd build-$toolname
 
     echo "ROCKBOXDEV: $toolname/configure"
-    printf "\ec"
+    printf ""
     case $toolname in
         ctng) # ct-ng doesnt support out-of-tree build and the src folder is named differently
             toolname="crosstool-ng"
@@ -225,13 +225,13 @@ build() {
             CFLAGS=-U_FORTIFY_SOURCE ../$toolname-$version/configure --target=$target --prefix=$prefix --enable-languages=c --disable-libssp --disable-docs $configure_params > /dev/null 2>/dev/null
         ;;
     esac
-    printf "\ec"
+    printf ""
     echo "ROCKBOXDEV: $toolname/make"
     $make > /dev/null
-    printf "\ec"
+    printf ""
     echo "ROCKBOXDEV: $toolname/make install"
     sudo $make install > /dev/null
-    printf "\ec"
+    printf ""
     echo "ROCKBOXDEV: rm -rf build-$toolname $toolname-$version"
     cd ..
     rm -rf build-$toolname $toolname-$version
@@ -364,7 +364,7 @@ PATH="$prefix/bin:${PATH}"
 
 for arch in $selarch
 do
-    printf "\ec"
+    printf ""
     case $arch in
         [Ss])
             # For binutils 2.16.1 builtin rules conflict on some systems with a
@@ -416,6 +416,6 @@ echo "ROCKBOXDEV: Done!"
 echo ""
 echo "ROCKBOXDEV: Make sure your PATH includes $prefix/bin"
 echo ""
-printf "\ec"
+printf ""
 kill "$dotloop"
 echo "COMPLETED"
