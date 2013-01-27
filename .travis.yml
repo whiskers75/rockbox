@@ -1,13 +1,17 @@
-install: printf "\n\nBUILDING whiskers75/rockbox:$TRAVIS_BRANCH $x\nJOB NO $TRAVIS_JOB_ID\nCOMMIT $TRAVIS_COMMIT\nPULL REQUEST $TRAVIS_PULL_REQUEST\n\n\nINSTALLING BUILD DEPENDENCIES FOR ARM TARGETS\n" && sudo travis/installdeps.sh | printf  '.'
-
+install: printf "\n\nBUILDING whiskers75/rockbox:$TRAVIS_BRANCH $x\nJOB NO $TRAVIS_JOB_ID\nCOMMIT $TRAVIS_COMMIT\nPULL REQUEST $TRAVIS_PULL_REQUEST\n\n\nINSTALLING BUILD DEPENDENCIES FOR ARM TARGETS\n" && while sleep 5; do printf .; done & sudo travis/installdeps.sh; kill "$!"
 before_script:
-   - mkdir build && cd build && printf "\n\nCONFIGURING whiskers75/rockbox\n" ../travis/configure.sh | echo -n '.'
+   - mkdir build && cd build && printf "\n\nCONFIGURING whiskers75/rockbox\n" && while sleep 5; do printf .; done & sudo ../travis/configure.sh; kill "$!"
 
 script: printf "\n\nRUNNING MAKE for whiskers75/rockbox\n" && make
 
+after_success:
+   - printf "\n\nBUILD SUCCEEDED!\n\nUPLOADING LATEST ARTIFACT" && plowup -a 'whiskers75:$RAPIDSHARE_PASSWD' rapidshare 'rockbox.zip:BUILD_$TRAVIS_JOB_ID.zip' && printf "ARTIFACT UPLOADED\n"
+after_failure:
+   - printf "\n\nBUILD FAILED!\n"
 language: c
 
 env:
+   secure: "FXkSD4A3wGc1x8ryF1PcFzCHukOdG57T+VWuhYOZna2eYNS7x/y0gsGq6TvF\nJodzHPI7+y+KNtNmhJzfZQDTmeMkabIXU/JLCktmLpi2XA43B/TM17nyIq8k\n1UbOT+B7qinyiAKNx4+b4+uDN+CYaOBVfsiSaHbM8tn6LQp5EzY="
    matrix:
-      - x="Normal Rockbox for Sansa Clip+" BUILDTYPE='N' BUILDFOR=62
-      - x="Rockbox Bootloader for Sansa Clip+" BUILDTYPE='B' BUILDFOR=62
+      - Normal Rockbox for Sansa Clip Plus                                                        BUILDTYPE='N' BUILDFOR=62
+      - Normal Rockbox for iPod Mini 1st Generation                                               BUILDTYPE='N' BUILDFOR=62
