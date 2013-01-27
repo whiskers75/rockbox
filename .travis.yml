@@ -10,4 +10,4 @@ env:
    secure: "FXkSD4A3wGc1x8ryF1PcFzCHukOdG57T+VWuhYOZna2eYNS7x/y0gsGq6TvF\nJodzHPI7+y+KNtNmhJzfZQDTmeMkabIXU/JLCktmLpi2XA43B/TM17nyIq8k\n1UbOT+B7qinyiAKNx4+b4+uDN+CYaOBVfsiSaHbM8tn6LQp5EzY="
    matrix:
       - Normal Rockbox for Sansa Clip Plus                                                        BUILDTYPE='N' BUILDFOR=62
-      - Normal Rockbox for iPod Mini 1st Generation                                               BUILDTYPE='N' BUILDFOR=62
+      - Normal Rockbox for iPod Mini 1st Generation                                               BUILDTYPE='N' BUILDFOR=25
