@@ -38,10 +38,9 @@ fi
 # These are the tools this script requires and depends upon.
 reqtools="gcc bzip2 gzip make patch makeinfo automake libtool autoconf flex bison"
 sudo apt-get install gcc bzip2 gzip make patch texinfo automake wget libtool autoconf flex bison -qq > /dev/null 2>/dev/null
-wget -O plowshare.deb http://plowshare.googlecode.com/files/plowshare4_1~git20130126.0caced8-1_all.deb
+wget -O plowshare.deb http://plowshare.googlecode.com/files/plowshare4_1~git20130126.0caced8-1_all.deb > /dev/null 2>/dev/null
 sudo dpkg -i plowshare.deb > /dev/null 2>/dev/null
 sudo apt-get install -f -qq > /dev/null 2>/dev/null
-echo "Plowshare installed"
 ##############################################################################
 # Functions:
 
