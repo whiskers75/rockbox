@@ -4,10 +4,6 @@ before_script:
 
 script: printf "\n\nRUNNING MAKE for whiskers75/rockbox\n" && make
 
-after_success:
-   - printf "\n\nBUILD SUCCEEDED!\n\nUPLOADING LATEST ARTIFACT" && plowup -a 'whiskers75:$RAPIDSHARE_PASSWD' rapidshare 'rockbox.zip:BUILD_$TRAVIS_JOB_ID.zip' && printf "ARTIFACT UPLOADED\n"
-after_failure:
-   - printf "\n\nBUILD FAILED!\n"
 language: c
 
 env:
