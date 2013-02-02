@@ -24,6 +24,7 @@
 
 #include <QtCore>
 #include <QtNetwork>
+#include <QNetworkAccessManager>
 
 class HttpGet : public QObject
 {
@@ -35,7 +36,6 @@ class HttpGet : public QObject
         bool getFile(const QUrl &url);
         void setProxy(const QUrl &url);
         void setProxy(bool);
-        QHttp::Error error(void);
         QString errorString(void);
         void setFile(QFile*);
         void setCache(const QDir&);
@@ -43,18 +43,34 @@ class HttpGet : public QObject
         int httpResponse(void);
         QByteArray readAll(void);
         bool isCached()
-            { return m_cached; }
+            { return m_lastRequestCached; }
         QDateTime timestamp(void)
-            { return m_serverTimestamp; }
-        void setDumbCache(bool b) //< disable checking of http header timestamp for caching
-            { m_dumbCache = b; }
-        static void setGlobalCache(const QDir& d) //< set global cache path
-            { m_globalCache = d; }
-        static void setGlobalProxy(const QUrl& p) //< set global proxy value
-            { m_globalProxy = p; }
-        static void setGlobalDumbCache(bool b) //< set "dumb" (ignore server status) caching mode
-            { m_globalDumbCache = b; }
-        static void setGlobalUserAgent(const QString& u) //< set global user agent string
+            { return m_lastServerTimestamp; }
+        //< set global cache path
+        static void setGlobalCache(const QDir& d)
+        {
+            qDebug() << "[HttpGet] Global cache set to" << d.absolutePath();
+            m_globalCache = d;
+        }
+        //< set global proxy value
+        static void setGlobalProxy(const QUrl& p)
+        {
+            qDebug() << "[HttpGet] setting global proxy" << p;
+            if(!p.isValid() || p.isEmpty()) {
+                HttpGet::m_globalProxy.setType(QNetworkProxy::NoProxy);
+            }
+            else {
+                HttpGet::m_globalProxy.setType(QNetworkProxy::HttpProxy);
+                HttpGet::m_globalProxy.setHostName(p.host());
+                HttpGet::m_globalProxy.setPort(p.port());
+                HttpGet::m_globalProxy.setUser(p.userName());
+                HttpGet::m_globalProxy.setPassword(p.password());
+            }
+            QNetworkProxy::setApplicationProxy(QNetworkProxy::NoProxy);
+            QNetworkProxy::setApplicationProxy(HttpGet::m_globalProxy);
+        }
+        //< set global user agent string
+        static void setGlobalUserAgent(const QString& u)
             { m_globalUserAgent = u; }
 
     public slots:
@@ -67,39 +83,28 @@ class HttpGet : public QObject
         void headerFinished(void);
 
     private slots:
-        void httpDone(bool error);
-        void httpFinished(int, bool);
-        void httpResponseHeader(const QHttpResponseHeader&);
-        void httpState(int);
-        void httpStarted(int);
-        void getFileFinish(void);
+        void requestFinished(QNetworkReply* reply);
+        void startRequest(QUrl url);
+        void downloadProgress(qint64 received, qint64 total);
+        void networkError(QNetworkReply::NetworkError error);
 
     private:
-        bool initializeCache(const QDir&);
-        QHttp http; //< download object
-        QFile *outputFile;
-        int m_response; //< http response
-        int getRequest;  //! get file http request id
-        int headRequest; //! get http header request id
-        QByteArray dataBuffer;
-        bool outputToBuffer;
-        bool m_usecache;
+        static QString m_globalUserAgent;
+        static QNetworkProxy m_globalProxy;
+        QNetworkAccessManager *m_mgr;
+        QNetworkReply *m_reply;
+        QNetworkDiskCache *m_cache;
         QDir m_cachedir;
-        QString m_cachefile; // cached filename
-        bool m_cached;
-        QUrl m_proxy;
-        bool m_useproxy;
-        QDateTime m_serverTimestamp; //< timestamp of file on server
-        QString m_query; //< constructed query to pass http getter
-        QString m_path; //< constructed path to pass http getter
-        QString m_hash; //< caching hash
-        bool m_dumbCache; //< true if caching should ignore the server header
-        QHttpRequestHeader m_header;
-
         static QDir m_globalCache; //< global cache path value
-        static QUrl m_globalProxy; //< global proxy value
-        static bool m_globalDumbCache; //< cache "dumb" mode global setting
-        static QString m_globalUserAgent; //< global user agent string
+        QByteArray m_data;
+        QFile *m_outputFile;
+        int m_lastStatusCode;
+        QString m_lastErrorString;
+        QDateTime m_lastServerTimestamp;
+        bool m_lastRequestCached;
+        QNetworkProxy m_proxy;
 };
 
+
 #endif
+
