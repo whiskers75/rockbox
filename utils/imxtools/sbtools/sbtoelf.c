@@ -283,12 +283,20 @@ enum sb_version_guess_t guess_sb_version(const char *filename)
         ret(SB_VERSION_UNK);
     if(hdr_size == 0x34)
         ret(SB_VERSION_1);
-    // check header size (v2)
-    if(fseek(f, 32, SEEK_SET))
+    // check header params relationship
+    struct
+    {
+        uint16_t nr_keys; /* Number of encryption keys */
+        uint16_t key_dict_off; /* Offset to key dictionary (in blocks) */
+        uint16_t header_size; /* In blocks */
+        uint16_t nr_sections; /* Number of sections */
+        uint16_t sec_hdr_size; /* Section header size (in blocks) */
+    } __attribute__((packed)) u;
+    if(fseek(f, 0x28, SEEK_SET))
         ret(SB_VERSION_UNK);
-    if(fread(&hdr_size, 4, 1, f) != 1)
+    if(fread(&u, sizeof(u), 1, f) != 1)
         ret(SB_VERSION_UNK);
-    if(hdr_size == 0xc)
+    if(u.sec_hdr_size == 1 && u.header_size == 6 && u.key_dict_off == u.header_size + u.nr_sections)
         ret(SB_VERSION_2);
     ret(SB_VERSION_UNK);
 #undef ret
