@@ -676,6 +676,9 @@ struct user_settings
 #endif
 #ifdef HAVE_BACKLIGHT_BRIGHTNESS 
     int brightness;
+    #if CONFIG_RTC
+    bool dnenabled;
+    int nightbrightness;
 #endif
 
 #ifdef HAVE_REMOTE_LCD
