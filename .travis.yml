@@ -1,28 +1,15 @@
 install: printf "\nBUILDING whiskers75/rockbox:$TRAVIS_BRANCH $x\nJOB NO $TRAVIS_JOB_ID\nCOMMIT $TRAVIS_COMMIT\nPULL REQUEST $TRAVIS_PULL_REQUEST\n\n\nINSTALLING BUILD DEPENDENCIES FOR ARM TARGETS\n" && sudo travis/install.sh
 
-before_script: mkdir build && cd build && printf "\n\nCONFIGURING whiskers75/rockbox\n" && sudo ../travis/configstage.sh
+before_script:
+   - mkdir build && cd build && printf "\n\nCONFIGURING whiskers75/rockbox\n" && sudo ../travis/configstage.sh
 
 script: printf "\n\nRUNNING MAKE for whiskers75/rockbox\n" && make
-after_success: printf "\n\n\nBUILD COMPLETED SUCCESSFULLY"
+after_success: printf "\n\n\nBUILD COMPLETED SUCCESSFULLY\nEXPORTING ARTIFACTS\n\n"
 language: c
 
 env:
    matrix:
-
-      - BUILDTYPE=”N” BUILDFOR=20
-      - BUILDTYPE=”N” BUILDFOR=21
-      - BUILDTYPE=”N” BUILDFOR=22
-      - BUILDTYPE=”N” BUILDFOR=23
-      - BUILDTYPE=”N” BUILDFOR=24
-      - BUILDTYPE=”N” BUILDFOR=25
-      - BUILDTYPE=”N” BUILDFOR=26
-      - BUILDTYPE=”N” BUILDFOR=27
-      - BUILDTYPE=”N” BUILDFOR=28
-      - BUILDTYPE=”N” BUILDFOR=29
-      - BUILDTYPE=”N” BUILDFOR=30 
-      - BUILDTYPE=”N” BUILDFOR=50
-      - BUILDTYPE=”N” BUILDFOR=51
-      - BUILDTYPE=”N” BUILDFOR=52
-      - BUILDTYPE=”N” BUILDFOR=53
-      - BUILDTYPE=”N” BUILDFOR=54
-      - BUILDTYPE=”N” BUILDFOR=55
+      - BUILDTYPE='N' BUILDFOR='sansaclipplus'
+      - BUILDTYPE='N' BUILDFOR='ipodmini1g'
+      - BUILDTYPE='B' BUILDFOR='sansaclipplus'
+      - BUILDTYPE='B' BUILDFOR='ipodmini1g'
