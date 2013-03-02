@@ -383,8 +383,7 @@ do
             build "gcc" "m68k-elf" "4.5.2" "" "--with-arch=cf" "gmp mpfr mpc"
             ;;
 
-        [Aa])
-
+        [Aa]);;
         [Rr])
         echo "r   - arm-app  (Samsung ypr0)"
             build_ctng "ypr0" "alsalib.tar.gz" "arm" "linux-gnueabi"
