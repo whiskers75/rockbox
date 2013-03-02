@@ -344,7 +344,7 @@ selarch=$SELARCH
 # add target dir to path to ensure the new binutils are used in gcc build
 PATH="$prefix/bin:${PATH}"
 
-for arch in $selarch
+for arch in $SELARCH
 do
     printf ""
     case $arch in
@@ -394,6 +394,19 @@ do
         *)
             echo "ROCKBOXDEV: Unsupported architecture option: $arch"
             exit
+            ;;
+        [])
+                echo "a   - arm      (ipods, iriver H10, Sansa, D2, Gigabeat, etc) (tested to work)"
+            binopts=""
+            gccopts=""
+            case $system in
+                Darwin)
+                    binopts="--disable-nls"
+                    gccopts="--disable-nls"
+                    ;;
+            esac
+            build "binutils" "arm-elf-eabi" "2.20.1" "binutils-2.20.1-ld-thumb-interwork-long-call.diff" "$binopts --disable-werror"
+            build "gcc" "arm-elf-eabi" "4.4.4" "rockbox-multilibs-noexceptions-arm-elf-eabi-gcc-4.4.2_1.diff" "$gccopts" "gmp mpfr"
             ;;
     esac
 done
