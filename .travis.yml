@@ -5,11 +5,11 @@ before_script:
 
 script: printf "\n\nRUNNING MAKE for whiskers75/rockbox\n" && make
 after_success: printf "\n\n\nBUILD COMPLETED SUCCESSFULLY\nEXPORTING ARTIFACTS\n\n"
-language: c
+language: linux
 
 env:
    matrix:
-      - BUILDTYPE='N' BUILDFOR='sansaclipplus' selarch="a"
-      - BUILDTYPE='N' BUILDFOR='ipodmini1g' selarch="a"
-      - BUILDTYPE='B' BUILDFOR='sansaclipplus' selarch="a"
-      - BUILDTYPE='B' BUILDFOR='ipodmini1g' selarch="a"
+      - BUILDTYPE='N' BUILDFOR='sansaclipplus' SELARCH="a"
+      - BUILDTYPE='N' BUILDFOR='ipodmini1g' SELARCH="a"
+      - BUILDTYPE='B' BUILDFOR='sansaclipplus' SELARCH="a"
+      - BUILDTYPE='B' BUILDFOR='ipodmini1g' SELARCH="a"
