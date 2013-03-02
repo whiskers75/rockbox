@@ -9,7 +9,7 @@ language: c
 
 env:
    matrix:
-      - BUILDTYPE='N' BUILDFOR='sansaclipplus'
-      - BUILDTYPE='N' BUILDFOR='ipodmini1g'
-      - BUILDTYPE='B' BUILDFOR='sansaclipplus'
-      - BUILDTYPE='B' BUILDFOR='ipodmini1g'
+      - BUILDTYPE='N' BUILDFOR='sansaclipplus' selarch="a"
+      - BUILDTYPE='N' BUILDFOR='ipodmini1g' selarch="a"
+      - BUILDTYPE='B' BUILDFOR='sansaclipplus' selarch="a"
+      - BUILDTYPE='B' BUILDFOR='ipodmini1g' selarch="a"

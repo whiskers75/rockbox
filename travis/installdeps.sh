@@ -303,11 +303,6 @@ for t in $reqtools; do
     fi
 done
 
-echo "Download directory : $dlwhere (set RBDEV_DOWNLOAD to change)"
-echo "Install prefix     : $prefix  (set RBDEV_PREFIX to change)"
-echo "Build dir          : $builddir (set RBDEV_BUILD to change)"
-echo "Make options       : $MAKEFLAGS (set MAKEFLAGS to change)"
-echo ""
 
 # Verify download directory
 if test -d "$dlwhere"; then
@@ -337,16 +332,7 @@ if test ! -w $prefix; then
   exit
 fi
 
-echo "Select target arch:"
-echo "s   - sh       (Archos models)"
-echo "m   - m68k     (iriver h1x0/h3x0, iaudio m3/m5/x5 and mpio hd200)"
-echo "a   - arm      (ipods, iriver H10, Sansa, D2, Gigabeat, etc)"
-echo "i   - mips     (Jz4740 and ATJ-based players)"
-echo "r   - arm-app  (Samsung ypr0)"
-echo "separate multiple targets with spaces"
-echo "(Example: \"s m a\" will build sh, m68k and arm)"
-echo ""
-selarch='a'
+echo "Building dependencies for target architecture(s) as selected by build:"
 system=`uname -s`
 
 # add target dir to path to ensure the new binutils are used in gcc build
@@ -357,6 +343,7 @@ do
     printf "\ec"
     case $arch in
         [Ss])
+            echo "s   - sh       (Archos models)"
             # For binutils 2.16.1 builtin rules conflict on some systems with a
             # default rule for Objective C. Disable the builtin make rules. See
             # http://sourceware.org/ml/binutils/2005-12/msg00259.html
@@ -366,6 +353,7 @@ do
             ;;
 
         [Ii])
+        echo "i   - mips     (Jz4740 and ATJ-based players)"
             build "binutils" "mipsel-elf" "2.17" "" "--disable-werror"
             patch=""
             if [ "$system" = "Interix" ]; then
@@ -375,11 +363,13 @@ do
             ;;
 
         [Mm])
+        echo "m   - m68k     (iriver h1x0/h3x0, iaudio m3/m5/x5 and mpio hd200)"
             build "binutils" "m68k-elf" "2.20.1" "" "--disable-werror"
             build "gcc" "m68k-elf" "4.5.2" "" "--with-arch=cf" "gmp mpfr mpc"
             ;;
 
         [Aa])
+        echo "a   - arm      (ipods, iriver H10, Sansa, D2, Gigabeat, etc)"
             binopts=""
             gccopts=""
             case $system in
@@ -392,6 +382,7 @@ do
             build "gcc" "arm-elf-eabi" "4.4.4" "rockbox-multilibs-noexceptions-arm-elf-eabi-gcc-4.4.2_1.diff" "$gccopts" "gmp mpfr"
             ;;
         [Rr])
+        echo "r   - arm-app  (Samsung ypr0)"
             build_ctng "ypr0" "alsalib.tar.gz" "arm" "linux-gnueabi"
             ;;
         *)
@@ -403,7 +394,4 @@ done
 
 echo ""
 echo "ROCKBOXDEV: Done!"
-echo ""
-echo "ROCKBOXDEV: Make sure your PATH includes $prefix/bin"
-echo ""
 printf "\ec"
