@@ -157,15 +157,13 @@ build() {
 
     cd $builddir
 
-    echo "ROCKBOXDEV: extracting $file"
     tar xjf $dlwhere/$file > /dev/null
 
     # do we have a patch?
     if test -n "$patch"; then
-        echo "ROCKBOXDEV: applying patch $patch"
 
         # apply the patch
-        (cd $builddir/$toolname-$version && patch -p1 < "$dlwhere/$patch")
+        (cd $builddir/$toolname-$version && patch -p1 < "$dlwhere/$patch") > /dev/null
 
         # check if the patch applied cleanly
         if [ $? -gt 0 ]; then
@@ -178,7 +176,7 @@ build() {
     if test -n "$needs_libs"; then
         cd "gcc-$version"
         if (echo $needs_libs | grep -q gmp && test ! -d gmp); then
-            echo "ROCKBOXDEV: Getting GMP"
+            echo "\nROCKBOXDEV: Getting GMP\n"
             if test ! -f $dlwhere/gmp-4.3.2.tar.bz2; then
                 getfile "gmp-4.3.2.tar.bz2" "$GNU_MIRROR/gmp"
             fi
@@ -187,7 +185,7 @@ build() {
         fi
 
         if (echo $needs_libs | grep -q mpfr && test ! -d mpfr); then
-            echo "ROCKBOXDEV: Getting MPFR"
+            echo "\nROCKBOXDEV: Getting MPFR\n"
             if test ! -f $dlwhere/mpfr-2.4.2.tar.bz2; then
                 getfile "mpfr-2.4.2.tar.bz2" "$GNU_MIRROR/mpfr"
             fi
@@ -196,7 +194,7 @@ build() {
         fi
 
         if (echo $needs_libs | grep -q mpc && test ! -d mpc); then
-            echo "ROCKBOXDEV: Getting MPC"
+            echo "\nROCKBOXDEV: Getting MPC\n"
             if test ! -f $dlwhere/mpc-0.8.1.tar.gz; then
                 getfile "mpc-0.8.1.tar.gz" "http://www.multiprecision.org/mpc/download"
             fi
@@ -206,13 +204,13 @@ build() {
         cd $builddir
     fi
 
-    echo "ROCKBOXDEV: mkdir build-$toolname"
+    echo "\nROCKBOXDEV: mkdir build-$toolname\n"
     mkdir build-$toolname
 
-    echo "ROCKBOXDEV: cd build-$toolname"
+    echo "\nROCKBOXDEV: cd build-$toolname\n"
     cd build-$toolname
 
-    echo "ROCKBOXDEV: $toolname/configure"
+    echo "\nROCKBOXDEV: $toolname/configure\n"
     printf ""
     case $toolname in
         ctng) # ct-ng doesnt support out-of-tree build and the src folder is named differently
@@ -225,13 +223,13 @@ build() {
         ;;
     esac
     printf ""
-    printf "\nROCKBOXDEV: $toolname/make"
+    printf "\nROCKBOXDEV: $toolname/make\n"
     $make -s V=0 > /dev/null 2>/dev/null
     printf ""
-    printf "\nROCKBOXDEV: $toolname/make install"
-    sudo $make install -S V=0 > /dev/null 2>/dev/null
+    printf "\nROCKBOXDEV: $toolname/make install\n"
+    sudo $make install -s V=0 > /dev/null 2>/dev/null
     printf ""
-    printf "\nROCKBOXDEV: rm -rf build-$toolname $toolname-$version"
+    printf "\nROCKBOXDEV: rm -rf build-$toolname $toolname-$version\n"
     cd ..
     rm -rf build-$toolname $toolname-$version
 }
@@ -312,11 +310,6 @@ for t in $reqtools; do
     fi
 done
 
-echo "Download directory : $dlwhere (set RBDEV_DOWNLOAD to change)"
-echo "Install prefix     : $prefix  (set RBDEV_PREFIX to change)"
-echo "Build dir          : $builddir (set RBDEV_BUILD to change)"
-echo "Make options       : $MAKEFLAGS (set MAKEFLAGS to change)"
-echo ""
 
 # Verify download directory
 if test -d "$dlwhere"; then
@@ -346,17 +339,7 @@ if test ! -w $prefix; then
   exit
 fi
 
-echo "Select target arch:"
-echo "s   - sh       (Archos models)"
-echo "m   - m68k     (iriver h1x0/h3x0, iaudio m3/m5/x5 and mpio hd200)"
-echo "a   - arm      (ipods, iriver H10, Sansa, D2, Gigabeat, etc)"
-echo "i   - mips     (Jz4740 and ATJ-based players)"
-echo "r   - arm-app  (Samsung ypr0)"
-echo "separate multiple targets with spaces"
-echo "(Example: \"s m a\" will build sh, m68k and arm)"
-echo ""
-selarch='a'
-system=`uname -s`
+echo "Installing dependencies for targets of type:"
 
 # add target dir to path to ensure the new binutils are used in gcc build
 PATH="$prefix/bin:${PATH}"
@@ -366,6 +349,7 @@ do
     printf ""
     case $arch in
         [Ss])
+        echo "s   - sh       (Archos models)"
             # For binutils 2.16.1 builtin rules conflict on some systems with a
             # default rule for Objective C. Disable the builtin make rules. See
             # http://sourceware.org/ml/binutils/2005-12/msg00259.html
@@ -375,6 +359,7 @@ do
             ;;
 
         [Ii])
+        echo "i   - mips     (Jz4740 and ATJ-based players)"
             build "binutils" "mipsel-elf" "2.17" "" "--disable-werror"
             patch=""
             if [ "$system" = "Interix" ]; then
@@ -384,11 +369,13 @@ do
             ;;
 
         [Mm])
+        echo "m   - m68k     (iriver h1x0/h3x0, iaudio m3/m5/x5 and mpio hd200)"
             build "binutils" "m68k-elf" "2.20.1" "" "--disable-werror"
             build "gcc" "m68k-elf" "4.5.2" "" "--with-arch=cf" "gmp mpfr mpc"
             ;;
 
         [Aa])
+        echo "a   - arm      (ipods, iriver H10, Sansa, D2, Gigabeat, etc) (tested to work)"
             binopts=""
             gccopts=""
             case $system in
@@ -401,6 +388,7 @@ do
             build "gcc" "arm-elf-eabi" "4.4.4" "rockbox-multilibs-noexceptions-arm-elf-eabi-gcc-4.4.2_1.diff" "$gccopts" "gmp mpfr"
             ;;
         [Rr])
+        echo "r   - arm-app  (Samsung ypr0)"
             build_ctng "ypr0" "alsalib.tar.gz" "arm" "linux-gnueabi"
             ;;
         *)
@@ -410,11 +398,6 @@ do
     esac
 done
 
-echo ""
-echo "ROCKBOXDEV: Done!"
-echo ""
-echo "ROCKBOXDEV: Make sure your PATH includes $prefix/bin"
-echo ""
+echo "\nROCKBOXDEV: Dependency installation completed\n"
 printf ""
 kill "$dotloop"
-echo "COMPLETED"
