@@ -339,7 +339,19 @@ if test ! -w $prefix; then
   exit
 fi
 
-echo "Installing dependencies for targets of type:"
+echo "Installing dependencies for targets of type: arm"
+        echo "a   - arm      (ipods, iriver H10, Sansa, D2, Gigabeat, etc) (tested to work)"
+            binopts=""
+            gccopts=""
+            case $system in
+                Darwin)
+                    binopts="--disable-nls"
+                    gccopts="--disable-nls"
+                    ;;
+            esac
+            build "binutils" "arm-elf-eabi" "2.20.1" "binutils-2.20.1-ld-thumb-interwork-long-call.diff" "$binopts --disable-werror"
+            build "gcc" "arm-elf-eabi" "4.4.4" "rockbox-multilibs-noexceptions-arm-elf-eabi-gcc-4.4.2_1.diff" "$gccopts" "gmp mpfr"
+            
 PATH="$prefix/bin:${PATH}"
 for arch in $SELARCH
 do
@@ -372,18 +384,7 @@ do
             ;;
 
         [Aa])
-        echo "a   - arm      (ipods, iriver H10, Sansa, D2, Gigabeat, etc) (tested to work)"
-            binopts=""
-            gccopts=""
-            case $system in
-                Darwin)
-                    binopts="--disable-nls"
-                    gccopts="--disable-nls"
-                    ;;
-            esac
-            build "binutils" "arm-elf-eabi" "2.20.1" "binutils-2.20.1-ld-thumb-interwork-long-call.diff" "$binopts --disable-werror"
-            build "gcc" "arm-elf-eabi" "4.4.4" "rockbox-multilibs-noexceptions-arm-elf-eabi-gcc-4.4.2_1.diff" "$gccopts" "gmp mpfr"
-            ;;
+
         [Rr])
         echo "r   - arm-app  (Samsung ypr0)"
             build_ctng "ypr0" "alsalib.tar.gz" "arm" "linux-gnueabi"
