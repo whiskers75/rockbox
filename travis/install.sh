@@ -340,10 +340,7 @@ if test ! -w $prefix; then
 fi
 
 echo "Installing dependencies for targets of type:"
-selarch=$SELARCH
-# add target dir to path to ensure the new binutils are used in gcc build
 PATH="$prefix/bin:${PATH}"
-
 for arch in $SELARCH
 do
     printf ""
