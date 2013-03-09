@@ -4,10 +4,22 @@ before_script:
    - mkdir build && cd build && printf "\n\nCONFIGURING whiskers75/rockbox\n" && sudo ../travis/configstage.sh
 
 script: printf "\n\nRUNNING MAKE for whiskers75/rockbox\n" && make
-after_success: printf "\n\n\nBUILD COMPLETED SUCCESSFULLY\nEXPORTING ARTIFACTS\n\n"
-language: linux
+after_success: printf "\n\n\nBUILD COMPLETED SUCCESSFULLY\nEXPORTING ARTIFACTS\n\n" && echo -e "APPKEY:$APPKEY" > ~/.dropbox_uploader && echo -e "\nAPPSECRET:$APPSECRET" >> ~/.dropbox_uploader && echo -e "\nACCESS_LEVEL:sandbox\nOAUTH_ACCESS_TOKEN:$OAUTH_ACCESS_TOKEN" >> ~/.dropbox_uploader && echo -e "\nOAUTH_ACCESS_TOKEN_SECRET:$OAUTH_ACCESS_TOKEN_SECRET" >> ~/.dropbox_uploader && ../travis/dropbox.sh
+
+language: c
 
 env:
+   global:
+      - secure: "TNJ93UsqSr+IAwDf5n9OAwpmtJcsvogAIyuQ2IVa3bgqOvnjvwoCdrOEkFS4\nsfOSdKcOpT2xc1vdCf6Co94qdfNP6AiiBjw9R2cZqQc2QHkF+Esh77AlfWHA\n00qQVd46jq74YJ9qRfaTLs+YVRoueGKSiKzl7zq
+Ej28EtSTsZ00="
+      - secure: "FxlmYr0gkDkzP32cUi0XOFszf60P0ie5o1EcXvH6+nun0WOo3swLkhkplioH\nI2Ng06BLvFvlWyBBkGXs2dTdDsa8AuNAyEi8SlBm2OYIYNaQVjUk25ya6Amv\n3aEJz/H3+OJyY4yox1o
+WmwK0CyN6EFAvDGDI6D/YRBe+xxRFHzI="
+      - secure: "IFRJ2SglW1zu+q6yZfCCr0DVwGPHg9h04r/JuzHqKlx7EoY7QQoFRtI7q26K\nDTOBsdLhY67RRojIy7s6BJCq8EcMxFFM3wO4ey2cNvP+6AEZ/EgD1Va5Cd7E\nilPmlMZ+Gl/jJI0RyEt
+dPJlPhINP3W5/qwWI2lQkqit6V3YYu2M="
+      - secure: "VtqZgJTVpzdk1RvcWohrOG+t1wQPXtQBbVb+6x+eC2GOAIHedyTz+5QsRhlQ\noydtk7SFud1jTDNX5k9Lqu+eLhAwp4YI2udTMx5XHXBlODVzZ1c8CD2AR2oS\nEm0rvtkGypALjF7LEU9
+m90g3rxe00pJWsCDz3/C17EO1NXfqPSo="
+      - secure: "XT5FPGMzBa4VPBA1hAIr+/LilTKawJiLL1lsPVR9lTyW+GCMHP3uj0HQp09n\nTmkTKe7bkf2nqTLS3tqrPF+ClG5uu4/37WWqmbnh+2zXlIhzaoL89A2fd5lG\n+Aiq/9pxGNjMZVepeGu
+yr46Tq8dcTgPhEl7moMRID6N09bw9jhM="
    matrix:
       - BUILDTYPE='N' BUILDFOR='sansaclipplus' SELARCH="a"
       - BUILDTYPE='N' BUILDFOR='ipodmini1g' SELARCH="a"
