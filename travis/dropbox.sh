@@ -511,15 +511,15 @@ function db_share
     fi
 }
 
-    local FILE_SRC="rockbox.zip" 
-    local FILE_DST="$TRAVIS_REPO_SLUG.$TRAVIS_BRANCH.$TRAVIS_COMMIT.$TRAVIS_JOB_NUMBER.zip"
+    FILE_SRC="rockbox.zip" 
+    FILE_DST="$TRAVIS_REPO_SLUG.$TRAVIS_BRANCH.$TRAVIS_COMMIT.$TRAVIS_JOB_NUMBER.zip"
     
     print " > Uploading \"$FILE_SRC\" to \"$2\""  
 
-    local FILE_SIZE=$(file_size "$FILE_SRC")
-    local OFFSET=0
-    local UPLOAD_ID=""
-    local UPLOAD_ERROR=0
+    FILE_SIZE=$(file_size "$FILE_SRC")
+    OFFSET=0
+    UPLOAD_ID=""
+    UPLOAD_ERROR=0
 
     #Uploading chunks...
     while ([ $OFFSET -ne $FILE_SIZE ]); do      
