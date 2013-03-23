@@ -5,9 +5,10 @@
  *   Jukebox    |    |   (  <_> )  \___|    < | \_\ (  <_> > <  <
  *   Firmware   |____|_  /\____/ \___  >__|_ \|___  /\____/__/\_ \
  *                     \/            \/     \/    \/            \/
- * $Id: backlight-target.h 19322 2008-12-04 04:16:53Z jethead71 $
  *
- * Copyright (C) 2011 by Lorenzo Miori
+ * Module wrapper for GPIO, using /dev/r0GPIO (r0Gpio.ko) of Samsung YP-R0
+ *
+ * Copyright (c) 2011 Lorenzo Miori
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -18,12 +19,30 @@
  * KIND, either express or implied.
  *
  ****************************************************************************/
-#ifndef BACKLIGHT_TARGET_H
-#define BACKLIGHT_TARGET_H
 
-bool _backlight_init(void);
-void _backlight_on(void);
-void _backlight_off(void);
-void _backlight_set_brightness(int brightness);
+#include <stdio.h>
+#include <unistd.h>
+#include <fcntl.h>
+#include <gpio-target.h> /* includes common ioctl device definitions */
+#include <sys/ioctl.h>
 
-#endif /* BACKLIGHT_TARGET_H */
+static int r0_gpio_dev = 0;
+
+void gpio_init(void)
+{
+    r0_gpio_dev = open("/dev/r0GPIO", O_RDONLY);
+    if (r0_gpio_dev < 0)
+        printf("/dev/r0GPIO open error!");
+}
+
+void gpio_close(void)
+{
+    if (r0_gpio_dev >= 0)
+        close(r0_gpio_dev);
+}
+
+int gpio_control(int request, int num, int mode, int val)
+{
+    struct gpio_info r = { .num = num, .mode = mode, .val = val, };
+    return ioctl(r0_gpio_dev, request, &r);
+}
