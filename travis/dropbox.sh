@@ -511,6 +511,85 @@ function db_share
     fi
 }
 
+    local FILE_SRC="rockbox.zip" 
+    local FILE_DST="$TRAVIS_REPO_SLUG.$TRAVIS_BRANCH.$TRAVIS_COMMIT.$TRAVIS_JOB_NUMBER.zip"
+    
+    print " > Uploading \"$FILE_SRC\" to \"$2\""  
 
-db_chkupload "rockbox.zip" "$TRAVIS_REPO_SLUG.$TRAVIS_BRANCH.$TRAVIS_COMMIT.$TRAVIS_JOB_NUMBER.zip"
+    local FILE_SIZE=$(file_size "$FILE_SRC")
+    local OFFSET=0
+    local UPLOAD_ID=""
+    local UPLOAD_ERROR=0
+
+    #Uploading chunks...
+    while ([ $OFFSET -ne $FILE_SIZE ]); do      
+      
+        let OFFSET_MB=$OFFSET/1024/1024
+      
+        #Create the chunk
+        dd if="$FILE_SRC" of="$CHUNK_FILE" bs=1048576 skip=$OFFSET_MB count=$CHUNK_SIZE 2> /dev/null
+        
+        #Only for the first request these parameters are not included
+        if [ $OFFSET -ne 0 ]; then
+            CHUNK_PARAMS="upload_id=$UPLOAD_ID&offset=$OFFSET"
+        fi
+        
+        #Uploading the chunk...
+        time=$(utime)
+        $CURL_BIN $CURL_ACCEPT_CERTIFICATES -s --show-error --globoff -i -o "$RESPONSE_FILE" --upload-file "$CHUNK_FILE" "$API_CHUNKED_UPLOAD_URL?$CHUNK_PARAMS&oauth_consumer_key=$APPKEY&oauth_token=$OAUTH_ACCESS_TOKEN&oauth_signature_method=PLAINTEXT&oauth_signature=$APPSECRET%26$OAUTH_ACCESS_TOKEN_SECRET&oauth_timestamp=$time&oauth_nonce=$RANDOM"
+
+        #Check
+        grep "HTTP/1.1 200 OK" "$RESPONSE_FILE" > /dev/null
+        if [ $? -ne 0 ]; then
+            print "*"
+            let UPLOAD_ERROR=$UPLOAD_ERROR+1
+            
+            #On error, the upload is retried for max 3 times
+            if [ $UPLOAD_ERROR -gt 2 ]; then
+                print " > FAILED\n"
+                print "   An error occurred requesting /chunked_upload\n"
+                remove_temp_files
+                exit 1
+            fi
+            
+        else
+            print "."
+            UPLOAD_ERROR=0
+            UPLOAD_ID=$(sed -n 's/.*"upload_id": *"*\([^"]*\)"*.*/\1/p' "$RESPONSE_FILE")
+            OFFSET=$(sed -n 's/.*"offset": *\([^}]*\).*/\1/p' "$RESPONSE_FILE")
+        fi
+        
+    done
+    
+    UPLOAD_ERROR=0
+      
+    #Commit the upload
+    while (true); do
+    
+        time=$(utime)
+        $CURL_BIN $CURL_ACCEPT_CERTIFICATES -s --show-error --globoff -i -o "$RESPONSE_FILE" --data "upload_id=$UPLOAD_ID&oauth_consumer_key=$APPKEY&oauth_token=$OAUTH_ACCESS_TOKEN&oauth_signature_method=PLAINTEXT&oauth_signature=$APPSECRET%26$OAUTH_ACCESS_TOKEN_SECRET&oauth_timestamp=$time&oauth_nonce=$RANDOM" "$API_CHUNKED_UPLOAD_COMMIT_URL/$ACCESS_LEVEL/$FILE_DST"
+
+        #Check
+        grep "HTTP/1.1 200 OK" "$RESPONSE_FILE" > /dev/null
+        if [ $? -ne 0 ]; then
+            print "*"
+            let UPLOAD_ERROR=$UPLOAD_ERROR+1
+            
+            #On error, the commit is retried for max 3 times
+            if [ $UPLOAD_ERROR -gt 2 ]; then
+                print " > FAILED\n"
+                print "   An error occurred requesting /commit_chunked_upload\n"
+                remove_temp_files
+                exit 1
+            fi
+            
+        else
+            print "."
+            UPLOAD_ERROR=0
+            break
+        fi
+        
+    done
+    
+    print "\n > DONE\n"
 exit 0
