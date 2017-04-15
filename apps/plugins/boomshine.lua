@@ -32,21 +32,22 @@ local MAX_BALL_SPEED = DEFAULT_BALL_SIZE / 2
 local DEFAULT_FOREGROUND_COLOR = rb.lcd_get_foreground ~= nil
                                                      and rb.lcd_get_foreground()
                                                      or  0
+math.randomseed(os.time() * 15); -- Let's shake it up a little
 
 local levels = {
             --  {GOAL, TOTAL_BALLS},
-                {1,   5},
-                {2,  10},
-                {4,  15},
-                {6,  20},
-                {10, 25},
-                {15, 30},
-                {18, 35},
-                {22, 40},
-                {30, 45},
-                {37, 50},
-                {48, 55},
-                {55, 60}
+                {1,  math.random(4, 8)},
+                {2,  math.random(5, 6)},
+                {4,  math.random(6, 8)},
+                {6,  math.random(8, 10)},
+                {10, math.random(12, 14)},
+                {15, math.random(17, 20)},
+                {18, math.random(19, 23)},
+                {22, math.random(25, 27)},
+                {30, math.random(33, 35)},
+                {37, math.random(38, 40)},
+                {48, math.random(49, 50)},
+                {55, math.random(55, 56)}
            }
 
 local Ball = {
@@ -219,7 +220,7 @@ function start_round(level, goal, nrBalls, total)
     -- Initialize the balls
     for _=1,nrBalls do
         table.insert(balls, Ball:new())
-    end
+    then end
 
     -- Make sure there are no unwanted touchscreen presses
     rb.button_clear_queue()
